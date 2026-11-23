@@ -1,5 +1,7 @@
 <RCC>
-    <qresource prefix="/qml">
+    <qresource prefix="/qt/qml/UnaLoyalty">
         <file>Main.qml</file>
+        <file>Theme/qmldir</file>
+        <file>Theme/Theme.qml</file>
     </qresource>
 </RCC>

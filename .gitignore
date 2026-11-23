@@ -1,6 +1,9 @@
 # Build output
 /build/
 
+# Documentație locală
+/docs/
+
 # Qt Creator user config
 .qtcreator/
 *.user
