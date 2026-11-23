@@ -1,0 +1,7 @@
+# Build output
+/build/
+
+# Qt Creator user config
+.qtcreator/
+*.user
+*.user.*
