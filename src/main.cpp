@@ -8,8 +8,8 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreationFailed,
                      &app, [] { QCoreApplication::exit(-1); }, Qt::QueuedConnection);
-    // Modulele QML stau în resurse sub qrc:/qt/qml/, calea de import implicită din Qt 6.
-    engine.load(QUrl(QStringLiteral("qrc:/qt/qml/UnaLoyalty/Main.qml")));
+    // Main.qml din modulul UnaLoyalty (src/CMakeLists.txt); calea o știe Qt.
+    engine.loadFromModule("UnaLoyalty", "Main");
 
     return app.exec();
 }
