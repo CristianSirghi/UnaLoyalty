@@ -15,6 +15,12 @@ Page {
 
     background: Rectangle { color: Theme.background }
 
+    // Pagina cardului deschis; câmpurile i se dau la deschidere (push).
+    Component {
+        id: cardDetails
+        CardDetailsPage {}
+    }
+
     ListView {
         id: cardList
         anchors {
@@ -36,8 +42,13 @@ Page {
         }
 
         delegate: CardTile {
+            id: tile
             width: ListView.view.width
-            // Deschiderea cardului (CardDetailsPage) vine la pasul următor.
+            onClicked: page.StackView.view.push(cardDetails, {
+                localName: tile.localName,
+                points: tile.points,
+                barcode: tile.barcode
+            })
         }
 
         footer: Item {

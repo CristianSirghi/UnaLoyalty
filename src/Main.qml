@@ -12,6 +12,15 @@ Window {
     title: "UnaLoyalty"
     color: Theme.background
 
+    // Butonul „înapoi” al telefonului închide fereastra: întâi ne întoarcem
+    // o pagină în tabul deschis; aplicația se închide doar de pe prima pagină.
+    onClosing: (close) => {
+        if (tabs.currentIndex === 0 && cardsStack.depth > 1) {
+            close.accepted = false
+            cardsStack.pop()
+        }
+    }
+
     // Conținutul stă în zona sigură (fără bara de stare și bara de navigare a
     // telefonului); fundalul ferestrei rămâne pe tot ecranul.
     ColumnLayout {
@@ -24,14 +33,19 @@ Window {
         }
         spacing: 0
 
-        // StackLayout ține ambele pagini în viață: la întoarcerea pe un tab,
-        // pagina e cum a lăsat-o clientul (poziția în listă etc.).
+        // StackLayout ține ambele taburi în viață: la întoarcerea pe un tab,
+        // pagina e cum a lăsat-o clientul (poziția în listă, cardul deschis etc.).
         StackLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
             currentIndex: tabs.currentIndex
 
-            CardListPage {}
+            // Tabul Carduri are propriul șir de pagini: lista → cardul deschis.
+            // Paginile deschid alte pagini prin page.StackView.view.push(...).
+            StackView {
+                id: cardsStack
+                initialItem: CardListPage {}
+            }
             ProfilePage {}
         }
 

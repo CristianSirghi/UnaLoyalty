@@ -35,10 +35,12 @@ qt_add_qml_module(UnaLoyalty
 
         # Componente (refolosibile; numele încep cu App)
         src/components/buttons/AppButton.qml
+        src/components/buttons/AppBackButton.qml
 
         # Carduri
         src/cards/CardListPage.qml
         src/cards/CardTile.qml
+        src/cards/CardDetailsPage.qml
 
         # Profil
         src/profile/ProfilePage.qml
@@ -46,6 +48,10 @@ qt_add_qml_module(UnaLoyalty
         # Comun
         src/core/apiclient.h
         src/core/apiclient.cpp
+
+        # Componente C++
+        src/components/qrcode/appqrcode.h
+        src/components/qrcode/appqrcode.cpp
 
         # Carduri
         src/cards/models/cardsmodel.h
@@ -60,7 +66,15 @@ target_include_directories(UnaLoyalty PRIVATE src)
 # Folderele cu clase C++ pentru QML (QML_ELEMENT): Qt le include doar după numele
 # fișierului, deci fiecare folder de felul ăsta se adaugă aici.
 target_include_directories(UnaLoyalty PRIVATE
+    src/components/qrcode
     src/cards/models
+)
+
+# Biblioteci externe, aduse ca fișiere sursă (vezi docs/SCOP.md, „Biblioteci externe”).
+# QR Code generator de Project Nayuki, MIT: calculează pătrățelele codului QR.
+target_sources(UnaLoyalty PRIVATE
+    src/3rdparty/qrcodegen/qrcodegen.hpp
+    src/3rdparty/qrcodegen/qrcodegen.cpp
 )
 
 set_target_properties(UnaLoyalty PROPERTIES
