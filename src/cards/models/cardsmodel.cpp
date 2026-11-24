@@ -17,10 +17,13 @@ QVariant CardsModel::data(const QModelIndex &index, int role) const
 
     const Card &card = m_cards.at(index.row());
     switch (role) {
-    case IdRole:        return card.id;
+    case CardIdRole:    return card.id;
     case LocalNameRole: return card.localName;
     case PointsRole:    return card.points;
     case BarcodeRole:   return card.barcode;
+    case BrandColorRole:    return card.brandColor;
+    case BonusPercentRole:  return card.bonusPercent;
+    case MaxPayPercentRole: return card.maxPayPercent;
     }
     return {};
 }
@@ -28,10 +31,13 @@ QVariant CardsModel::data(const QModelIndex &index, int role) const
 QHash<int, QByteArray> CardsModel::roleNames() const
 {
     return {
-        { IdRole,        "id" },
+        { CardIdRole,    "cardId" },
         { LocalNameRole, "localName" },
         { PointsRole,    "points" },
         { BarcodeRole,   "barcode" },
+        { BrandColorRole,    "brandColor" },
+        { BonusPercentRole,  "bonusPercent" },
+        { MaxPayPercentRole, "maxPayPercent" },
     };
 }
 

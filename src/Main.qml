@@ -40,11 +40,11 @@ Window {
             Layout.fillHeight: true
             currentIndex: tabs.currentIndex
 
-            // Tabul Carduri are propriul șir de pagini: lista → cardul deschis.
+            // Tabul Carduri are propriul șir de pagini: portofelul → un bon.
             // Paginile deschid alte pagini prin page.StackView.view.push(...).
             StackView {
                 id: cardsStack
-                initialItem: CardListPage {}
+                initialItem: WalletPage {}
             }
             ProfilePage {}
         }

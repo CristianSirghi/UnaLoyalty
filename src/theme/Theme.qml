@@ -24,6 +24,15 @@ QtObject {
     readonly property color textOnPrimaryMuted: "#E3E9F4"
     readonly property color danger:        dark ? "#E57373" : "#C62828"
 
+    // Cardul din portofel: mereu alb, ca un card fizic (și QR-ul cere fond alb),
+    // deci culorile lui nu se schimbă în tema întunecată.
+    readonly property color cardSurface:       "#FFFFFF"
+    readonly property color cardText:          "#1B1F24"
+    readonly property color cardTextSecondary: "#5F6B7A"
+
+    // Umbra plăcilor (cardul, plăcile cu puncte)
+    readonly property color shadow: dark ? Qt.rgba(0, 0, 0, 0.45) : Qt.rgba(0.06, 0.09, 0.16, 0.16)
+
     // Fonturi (px)
     readonly property int fontTitle: 28
     readonly property int fontHeading: 22
