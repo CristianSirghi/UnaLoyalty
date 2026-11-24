@@ -27,11 +27,9 @@ Page {
         receiptId: page.receiptId
     }
 
-    Flickable {
+    AppFlickable {
         anchors.fill: parent
         contentHeight: content.implicitHeight + Theme.spaceXl
-        boundsBehavior: Flickable.StopAtBounds
-        clip: true
 
         ColumnLayout {
             id: content

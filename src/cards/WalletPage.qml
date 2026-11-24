@@ -52,12 +52,10 @@ Page {
         cardId: page.selectedCard ? page.selectedCard.cardId : 0
     }
 
-    Flickable {
+    AppFlickable {
         id: scroller
         anchors.fill: parent
         contentHeight: content.implicitHeight + Theme.spaceXxl
-        boundsBehavior: Flickable.StopAtBounds
-        clip: true
 
         ColumnLayout {
             id: content

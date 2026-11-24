@@ -38,6 +38,7 @@ qt_add_qml_module(UnaLoyalty
         src/components/buttons/AppBackButton.qml
         src/components/navigation/AppNavBar.qml
         src/components/navigation/AppStatusBarScrim.qml
+        src/components/containers/AppFlickable.qml
 
         # Carduri
         src/cards/WalletPage.qml
