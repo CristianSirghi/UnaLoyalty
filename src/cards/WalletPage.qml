@@ -35,10 +35,6 @@ Page {
                                                : cardRepeater.itemAt(currentIndex) as WalletCard
     readonly property color accent: selectedCard ? selectedCard.brandColor : Theme.primary
 
-    function formatNumber(value) {
-        return value.toLocaleString(Qt.locale(), "f", Number.isInteger(value) ? 0 : 2)
-    }
-
     // Codul mărit pe tot ecranul (atingerea QR-ului de pe card).
     CardCodePopup {
         id: codePopup
@@ -135,6 +131,9 @@ Page {
                             snapAnimation.restart()
                         }
 
+                        // Altă lățime (rotirea telefonului): rămâne pe același card.
+                        onWidthChanged: snapTo(page.currentIndex)
+
                         onFlickStarted: {
                             const direction = horizontalVelocity > 0 ? 1 : -1
                             cancelFlick()
@@ -161,6 +160,10 @@ Page {
                             Repeater {
                                 id: cardRepeater
                                 model: CardsService.cards
+
+                                // Lista s-a schimbat (ex. a venit de la server mai scurtă):
+                                // poziția rămâne în șir.
+                                onCountChanged: carousel.snapTo(page.currentIndex)
 
                                 delegate: WalletCard {
                                     id: walletCard
@@ -218,7 +221,7 @@ Page {
                         Layout.fillHeight: true
                         Layout.preferredWidth: 1
                         label: qsTr("Puncte disponibile")
-                        value: page.selectedCard ? page.formatNumber(page.selectedCard.points) : ""
+                        value: page.selectedCard ? Format.points(page.selectedCard.points) : ""
                     }
                     WalletStatTile {
                         Layout.fillWidth: true
@@ -227,11 +230,11 @@ Page {
                         readonly property bool known: page.selectedCard !== null
                                                       && page.selectedCard.bonusPercent > 0
                         label: qsTr("Bonus la fiecare bon")
-                        value: known ? page.formatNumber(page.selectedCard.bonusPercent) + "%" : "—"
+                        value: known ? Format.percent(page.selectedCard.bonusPercent) : "—"
                         valueColor: page.accent
                         note: known && page.selectedCard.maxPayPercent > 0
-                              ? qsTr("Plătești cu puncte până la %1% din bon")
-                                    .arg(page.formatNumber(page.selectedCard.maxPayPercent))
+                              ? qsTr("Plătești cu puncte până la %1 din bon")
+                                    .arg(Format.percent(page.selectedCard.maxPayPercent))
                               : ""
                     }
                 }
@@ -328,5 +331,11 @@ Page {
                 }
             }
         }
+    }
+
+    // Pe telefon: la derulare, cardurile și bonurile trec pe sub fâșia asta (în culoarea
+    // benzii), nu pe sub ora din bara de stare; iconițele albe rămân lizibile.
+    AppStatusBarScrim {
+        color: page.accent
     }
 }

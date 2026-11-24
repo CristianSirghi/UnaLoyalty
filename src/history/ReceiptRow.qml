@@ -27,10 +27,6 @@ AbstractButton {
     topPadding: 14
     bottomPadding: 14
 
-    function formatPoints(value) {
-        return value.toLocaleString(Qt.locale(), "f", Number.isInteger(value) ? 0 : 2)
-    }
-
     background: Rectangle {
         radius: Theme.radiusM
         color: row.down ? Theme.surfaceMuted : Theme.surface
@@ -80,7 +76,7 @@ AbstractButton {
             }
             Text {
                 Layout.fillWidth: true
-                text: row.dateTime.toLocaleString(Qt.locale(), "dd.MM.yyyy, HH:mm")
+                text: Format.dateTime(row.dateTime)
                 color: Theme.textSecondary
                 font.pixelSize: Theme.fontCaption
             }
@@ -92,7 +88,7 @@ AbstractButton {
 
             Text {
                 Layout.alignment: Qt.AlignRight
-                text: qsTr("%1 lei").arg(row.total.toLocaleString(Qt.locale(), "f", 2))
+                text: Format.money(row.total)
                 color: Theme.textPrimary
                 font.pixelSize: Theme.fontBody
                 font.weight: Font.DemiBold
@@ -109,9 +105,9 @@ AbstractButton {
                     anchors.centerIn: parent
                     // Punctele primite; dacă s-a plătit și cu puncte, apar și cele folosite.
                     text: {
-                        let t = qsTr("+%1 puncte").arg(row.formatPoints(row.pointsEarned))
+                        let t = qsTr("+%1 puncte").arg(Format.points(row.pointsEarned))
                         if (row.pointsSpent > 0)
-                            t += "  " + qsTr("−%1").arg(row.formatPoints(row.pointsSpent))
+                            t += "  " + qsTr("−%1").arg(Format.points(row.pointsSpent))
                         return t
                     }
                     color: row.accent

@@ -62,7 +62,7 @@ ColumnLayout {
                 anchors.fill: parent
                 preferredRendererType: Shape.CurveRenderer
                 ShapePath {
-                    strokeColor: "#FFFFFF"
+                    strokeColor: Theme.textOnPrimary
                     strokeWidth: 2.5
                     fillColor: "transparent"
                     capStyle: ShapePath.RoundCap

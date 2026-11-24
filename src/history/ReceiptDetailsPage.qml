@@ -21,13 +21,6 @@ Page {
 
     background: Rectangle { color: Theme.background }
 
-    function formatMoney(value) {
-        return qsTr("%1 lei").arg(value.toLocaleString(Qt.locale(), "f", 2))
-    }
-    function formatNumber(value) {
-        return value.toLocaleString(Qt.locale(), "f", Number.isInteger(value) ? 0 : 2)
-    }
-
     // Produsele bonului; modelul C++ le încarcă singur după receiptId.
     ReceiptLinesModel {
         id: lines
@@ -100,7 +93,7 @@ Page {
                     }
                     Text {
                         Layout.fillWidth: true
-                        text: page.dateTime.toLocaleString(Qt.locale(), "dd.MM.yyyy, HH:mm")
+                        text: Format.dateTime(page.dateTime)
                         color: Theme.textSecondary
                         font.pixelSize: Theme.fontBody - 1
                     }
@@ -158,15 +151,15 @@ Page {
                                     }
                                     Text {
                                         Layout.fillWidth: true
-                                        text: page.formatNumber(line.quantity) + " × "
-                                              + page.formatMoney(line.price)
+                                        text: Format.points(line.quantity) + " × "
+                                              + Format.money(line.price)
                                         color: Theme.textSecondary
                                         font.pixelSize: Theme.fontCaption
                                     }
                                 }
                                 Text {
                                     Layout.alignment: Qt.AlignTop
-                                    text: page.formatMoney(line.sum)
+                                    text: Format.money(line.sum)
                                     color: Theme.textPrimary
                                     font.pixelSize: Theme.fontBody
                                 }
@@ -193,7 +186,7 @@ Page {
                             font.weight: Font.Bold
                         }
                         Text {
-                            text: page.formatMoney(page.total)
+                            text: Format.money(page.total)
                             color: Theme.textPrimary
                             font.pixelSize: Theme.fontBody + 3
                             font.weight: Font.Bold
@@ -229,7 +222,7 @@ Page {
                             font.pixelSize: Theme.fontBody
                         }
                         Text {
-                            text: "+" + page.formatNumber(page.pointsEarned)
+                            text: "+" + Format.points(page.pointsEarned)
                             color: Theme.primary
                             font.pixelSize: Theme.fontHeading - 2
                             font.weight: Font.Bold
@@ -245,7 +238,7 @@ Page {
                             font.pixelSize: Theme.fontBody
                         }
                         Text {
-                            text: "−" + page.formatNumber(page.pointsSpent)
+                            text: "−" + Format.points(page.pointsSpent)
                             color: Theme.textPrimary
                             font.pixelSize: Theme.fontHeading - 2
                             font.weight: Font.Bold
@@ -254,5 +247,10 @@ Page {
                 }
             }
         }
+    }
+
+    // Pe telefon: conținutul derulat trece pe sub fâșia asta, nu pe sub ora din bara de stare.
+    AppStatusBarScrim {
+        color: Theme.background
     }
 }

@@ -27,6 +27,8 @@ QtObject {
     // Cardul din portofel: mereu alb, ca un card fizic (și QR-ul cere fond alb),
     // deci culorile lui nu se schimbă în tema întunecată.
     readonly property color cardSurface:       "#FFFFFF"
+    readonly property color cardSurfaceMuted:  "#E9EDF2"   // butoane rotunde pe card
+    readonly property color cardSurfacePressed: "#D5DBE3"
     readonly property color cardText:          "#1B1F24"
     readonly property color cardTextSecondary: "#5F6B7A"
 

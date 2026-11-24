@@ -15,10 +15,10 @@ Popup {
     property string barcode
     property color brandColor: Theme.primary
 
-    function show(name, code, color) {
+    function show(name: string, code: string, brand: color) {
         localName = name
         barcode = code
-        brandColor = color
+        brandColor = brand
         open()
     }
 
@@ -67,20 +67,9 @@ Popup {
                 Layout.fillWidth: true
                 spacing: Theme.spaceS + 2
 
-                Rectangle {
-                    implicitWidth: 36
-                    implicitHeight: 36
-                    radius: 18
-                    color: popup.brandColor
-
-                    Text {
-                        anchors.centerIn: parent
-                        text: popup.localName.replace(/^[^0-9A-Za-zÀ-ɏЀ-ӿ]+/, "")
-                                             .charAt(0).toUpperCase()
-                        color: "#FFFFFF"
-                        font.pixelSize: Theme.fontBody + 1
-                        font.weight: Font.Bold
-                    }
+                LocalBadge {
+                    localName: popup.localName
+                    brandColor: popup.brandColor
                 }
                 Text {
                     Layout.fillWidth: true
@@ -99,7 +88,7 @@ Popup {
 
                     background: Rectangle {
                         radius: width / 2
-                        color: closeButton.down ? "#D5DBE3" : "#E9EDF2"
+                        color: closeButton.down ? Theme.cardSurfacePressed : Theme.cardSurfaceMuted
                     }
                     contentItem: Item {
                         Shape {

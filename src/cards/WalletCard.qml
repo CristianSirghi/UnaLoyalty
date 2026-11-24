@@ -56,21 +56,9 @@ Item {
             Layout.fillWidth: true
             spacing: Theme.spaceS + 2
 
-            Rectangle {
-                implicitWidth: 36
-                implicitHeight: 36
-                radius: 18
-                color: card.brandColor
-
-                Text {
-                    anchors.centerIn: parent
-                    // Prima literă sau cifră din nume (latină, inclusiv ă/ș/ț, sau chirilică).
-                    text: card.localName.replace(/^[^0-9A-Za-zÀ-ɏЀ-ӿ]+/, "")
-                                        .charAt(0).toUpperCase()
-                    color: "#FFFFFF"
-                    font.pixelSize: Theme.fontBody + 1
-                    font.weight: Font.Bold
-                }
+            LocalBadge {
+                localName: card.localName
+                brandColor: card.brandColor
             }
             Text {
                 Layout.fillWidth: true
@@ -90,7 +78,7 @@ Item {
 
                 background: Rectangle {
                     radius: width / 2
-                    color: expandButton.down ? "#E9EDF2" : "transparent"
+                    color: expandButton.down ? Theme.cardSurfaceMuted : "transparent"
                 }
                 contentItem: Item {
                     Shape {

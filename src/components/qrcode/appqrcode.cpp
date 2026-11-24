@@ -17,6 +17,16 @@ AppQrCode::AppQrCode(QQuickItem *parent)
 {
     // Pătrățelele trebuie să aibă margini tăiate drept, nu netezite.
     setAntialiasing(false);
+    // Desenul acoperă tot (fond alb): Qt nu mai amestecă cu ce e dedesubt.
+    setOpaquePainting(true);
+}
+
+void AppQrCode::itemChange(ItemChange change, const ItemChangeData &value)
+{
+    // Pe un ecran cu altă densitate de pixeli, pătrățelele se recalculează.
+    if (change == ItemDevicePixelRatioHasChanged)
+        update();
+    QQuickPaintedItem::itemChange(change, value);
 }
 
 QString AppQrCode::text() const

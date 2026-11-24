@@ -37,6 +37,7 @@ qt_add_qml_module(UnaLoyalty
         src/components/buttons/AppButton.qml
         src/components/buttons/AppBackButton.qml
         src/components/navigation/AppNavBar.qml
+        src/components/navigation/AppStatusBarScrim.qml
 
         # Carduri
         src/cards/WalletPage.qml
@@ -44,6 +45,7 @@ qt_add_qml_module(UnaLoyalty
         src/cards/WalletStatTile.qml
         src/cards/AddCardSlide.qml
         src/cards/CardCodePopup.qml
+        src/cards/LocalBadge.qml
 
         # Istoric (bonuri)
         src/history/ReceiptRow.qml
@@ -60,6 +62,8 @@ qt_add_qml_module(UnaLoyalty
         src/core/screenbrightness.cpp
         src/core/systembars.h
         src/core/systembars.cpp
+        src/core/format.h
+        src/core/format.cpp
 
         # Componente C++
         src/components/qrcode/appqrcode.h
