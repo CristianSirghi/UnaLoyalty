@@ -37,7 +37,8 @@ qt_add_qml_module(UnaLoyalty
         src/components/buttons/AppButton.qml
 
         # Carduri
-        src/cards/CardsPage.qml
+        src/cards/CardListPage.qml
+        src/cards/CardTile.qml
 
         # Profil
         src/profile/ProfilePage.qml
@@ -45,10 +46,22 @@ qt_add_qml_module(UnaLoyalty
         # Comun
         src/core/apiclient.h
         src/core/apiclient.cpp
+
+        # Carduri
+        src/cards/models/cardsmodel.h
+        src/cards/models/cardsmodel.cpp
+        src/cards/models/cardsservice.h
+        src/cards/models/cardsservice.cpp
 )
 
 # În C++: #include "core/apiclient.h"
 target_include_directories(UnaLoyalty PRIVATE src)
+
+# Folderele cu clase C++ pentru QML (QML_ELEMENT): Qt le include doar după numele
+# fișierului, deci fiecare folder de felul ăsta se adaugă aici.
+target_include_directories(UnaLoyalty PRIVATE
+    src/cards/models
+)
 
 set_target_properties(UnaLoyalty PROPERTIES
     WIN32_EXECUTABLE TRUE

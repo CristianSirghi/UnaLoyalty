@@ -31,7 +31,7 @@ Window {
             Layout.fillHeight: true
             currentIndex: tabs.currentIndex
 
-            CardsPage {}
+            CardListPage {}
             ProfilePage {}
         }
 
