@@ -32,8 +32,15 @@ Popup {
     focus: true
     closePolicy: Popup.CloseOnEscape   // Escape și butonul „înapoi” de pe Android
 
-    onOpened: ScreenBrightness.setMaximum(true)
-    onClosed: ScreenBrightness.setMaximum(false)
+    // Cât e deschis: ecranul la maximum și iconițele de sus închise (fondul e alb).
+    onOpened: {
+        ScreenBrightness.setMaximum(true)
+        SystemBars.whiteOverlay = true
+    }
+    onClosed: {
+        ScreenBrightness.setMaximum(false)
+        SystemBars.whiteOverlay = false
+    }
 
     enter: Transition { NumberAnimation { property: "opacity"; from: 0; to: 1; duration: 150 } }
     exit: Transition { NumberAnimation { property: "opacity"; from: 1; to: 0; duration: 150 } }
@@ -42,13 +49,16 @@ Popup {
     background: Rectangle { color: Theme.cardSurface }
 
     contentItem: Item {
+        id: codeContent
+
         ColumnLayout {
             anchors {
                 fill: parent
                 leftMargin: Theme.spaceXxl
                 rightMargin: Theme.spaceXxl
-                topMargin: Theme.spaceXxl * 2
-                bottomMargin: Theme.spaceXxl + Theme.spaceS
+                // Pe telefon, sub bara de stare și deasupra barei de navigare.
+                topMargin: codeContent.SafeArea.margins.top + Theme.spaceXxl
+                bottomMargin: codeContent.SafeArea.margins.bottom + Theme.spaceXxl
             }
             spacing: Theme.spaceL
 

@@ -48,7 +48,8 @@ Page {
                 top: parent.top
                 leftMargin: Theme.spaceXl
                 rightMargin: Theme.spaceXl
-                topMargin: Theme.spaceL
+                // Pe telefon pagina începe sub bara de stare.
+                topMargin: page.SafeArea.margins.top + Theme.spaceL
             }
             spacing: Theme.spaceL
 

@@ -36,6 +36,7 @@ qt_add_qml_module(UnaLoyalty
         # Componente (refolosibile; numele încep cu App)
         src/components/buttons/AppButton.qml
         src/components/buttons/AppBackButton.qml
+        src/components/navigation/AppNavBar.qml
 
         # Carduri
         src/cards/WalletPage.qml
@@ -57,6 +58,8 @@ qt_add_qml_module(UnaLoyalty
         src/core/apiclient.cpp
         src/core/screenbrightness.h
         src/core/screenbrightness.cpp
+        src/core/systembars.h
+        src/core/systembars.cpp
 
         # Componente C++
         src/components/qrcode/appqrcode.h

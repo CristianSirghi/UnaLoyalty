@@ -72,7 +72,9 @@ Page {
             Rectangle {
                 id: band
                 Layout.fillWidth: true
-                implicitHeight: bandContent.implicitHeight + Theme.spaceXxl + 64
+                // Pe telefon banda urcă sub bara de stare; conținutul ei începe sub ea.
+                readonly property real topInset: page.SafeArea.margins.top
+                implicitHeight: bandContent.implicitHeight + topInset + Theme.spaceXxl + 64
                 color: page.accent
                 topLeftRadius: 0
                 topRightRadius: 0
@@ -87,7 +89,7 @@ Page {
                         left: parent.left
                         right: parent.right
                         top: parent.top
-                        topMargin: Theme.spaceXxl
+                        topMargin: band.topInset + Theme.spaceXxl
                     }
                     spacing: 14
 
