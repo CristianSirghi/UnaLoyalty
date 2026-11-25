@@ -34,6 +34,29 @@ QString Format::dateTime(const QDateTime &value) const
     return value.toString(QStringLiteral("dd.MM.yyyy, HH:mm"));
 }
 
+QString Format::phone(const QString &value) const
+{
+    // În Back telefonul e scris local („060000002”), uneori poate și cu prefixul
+    // („+373 60000002”, „37360000002”). Păstrăm doar cifrele și scoatem prefixul;
+    // rămân 8 cifre (60 000 002), grupate 2-3-3, ca în Moldova.
+    QString digits;
+    for (const QChar c : value) {
+        if (c.isDigit())
+            digits += c;
+    }
+    if (digits.size() == 11 && digits.startsWith(QLatin1String("373")))
+        digits.remove(0, 3);
+    else if (digits.size() == 9 && digits.startsWith(QLatin1Char('0')))
+        digits.remove(0, 1);
+
+    // Alt format (număr din altă țară, greșit scris): îl arătăm cum a venit.
+    if (digits.size() != 8)
+        return value;
+
+    return QStringLiteral("+373 %1 %2 %3")
+        .arg(digits.left(2), digits.mid(2, 3), digits.mid(5, 3));
+}
+
 QString Format::initial(const QString &name) const
 {
     for (const QChar c : name) {

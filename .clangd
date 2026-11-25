@@ -1,0 +1,7 @@
+# Doar pentru editorul din Qt Creator (clangd), nu pentru build.
+# Qt Creator îi dă editorului ținta Android fără versiune (aarch64-linux-android), iar
+# NDK 30 o refuză în sys/cdefs.h („Unversioned target triples are not supported!”).
+# Build-ul are ținta corectă (aarch64-none-linux-android28). 28 = ANDROID_PLATFORM;
+# dacă se schimbă nivelul minim de Android, se schimbă și aici.
+CompileFlags:
+  Add: [-D__ANDROID_MIN_SDK_VERSION__=28]

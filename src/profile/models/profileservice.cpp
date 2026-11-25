@@ -1,6 +1,11 @@
 #include "profileservice.h"
 
+#include "core/apiclient.h"
+#include "core/serverconfig.h"
+
 #include <QCoreApplication>
+#include <QDebug>
+#include <QJsonObject>
 #include <QLocale>
 #include <QQmlEngine>
 #include <QSettings>
@@ -46,14 +51,33 @@ QLocale localeFor(const QString &language)
 ProfileService::ProfileService(QQmlEngine *engine, QObject *parent)
     : QObject(parent)
     , m_engine(engine)
-    // Date de test: titularul cardurilor de test Etalonus. Telefonul e inventat.
-    // Se înlocuiesc cu răspunsul serverului.
-    , m_name(QStringLiteral("Test Loialitate 2"))
-    , m_phone(QStringLiteral("+373 60 000 000"))
 {
     const QString saved = QSettings().value(kLanguageKey).toString();
     m_language = isSupported(saved) ? saved : systemLanguage();
     applyLanguage();
+
+    loadProfile();
+}
+
+void ProfileService::loadProfile()
+{
+    ApiClient::instance()->command(
+        QStringLiteral("get_profile"),
+        {{QStringLiteral("card"), ServerConfig::testCard()}},
+        [self = QPointer<ProfileService>(this)](const ApiClient::Result &result) {
+            if (!self)
+                return;
+            if (!result.ok) {
+                qWarning() << "get_profile:" << result.error;
+                return;
+            }
+            // Răspunsul: {"FIRST_NAME": ..., "LAST_NAME": ..., "PHONE": ...}
+            const QJsonObject person = result.data.toObject();
+            self->m_firstName = person.value(QLatin1String("FIRST_NAME")).toString().trimmed();
+            self->m_lastName = person.value(QLatin1String("LAST_NAME")).toString().trimmed();
+            self->m_phone = person.value(QLatin1String("PHONE")).toString().trimmed();
+            emit self->profileChanged();
+        });
 }
 
 ProfileService *ProfileService::create(QQmlEngine *qmlEngine, QJSEngine *jsEngine)
@@ -64,7 +88,8 @@ ProfileService *ProfileService::create(QQmlEngine *qmlEngine, QJSEngine *jsEngin
 
 QString ProfileService::name() const
 {
-    return m_name;
+    // Unul din ele poate lipsi: atunci fără spațiu în plus.
+    return QStringList{m_firstName, m_lastName}.join(QLatin1Char(' ')).trimmed();
 }
 
 QString ProfileService::phone() const
@@ -74,15 +99,15 @@ QString ProfileService::phone() const
 
 QString ProfileService::initials() const
 {
-    // Prima literă din primele două cuvinte care încep cu o literă
-    // (cifrele, ca „2” din numele de test, nu intră).
+    // Prima literă din prenume și prima din nume („Ana Maria” + „Popescu” → „AP”).
     QString result;
-    const QStringList words = m_name.split(QLatin1Char(' '), Qt::SkipEmptyParts);
-    for (const QString &word : words) {
-        if (word.front().isLetter())
-            result += word.front().toUpper();
-        if (result.size() == 2)
-            break;
+    for (const QString &part : {m_firstName, m_lastName}) {
+        for (const QChar c : part) {
+            if (c.isLetter()) {
+                result += c.toUpper();
+                break;
+            }
+        }
     }
     return result;
 }

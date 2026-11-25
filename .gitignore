@@ -1,7 +1,7 @@
 # Build output
 /build/
 
-# Documentație locală
+# Documentație locală (și serverul PHP, docs/server/: niciodată în git)
 /docs/
 
 # Qt Creator user config

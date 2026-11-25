@@ -1,5 +1,8 @@
 #include "apiclient.h"
 
+#include "serverconfig.h"
+
+#include <QCoreApplication>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -7,6 +10,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
+#include <QPointer>
 
 namespace {
 
@@ -39,6 +43,24 @@ ApiClient::ApiClient(QObject *parent)
     : QObject(parent)
     , m_network(new QNetworkAccessManager(this))
 {
+}
+
+ApiClient *ApiClient::instance()
+{
+    static QPointer<ApiClient> shared;
+    if (!shared) {
+        shared = new ApiClient(QCoreApplication::instance());
+        shared->setBaseUrl(QUrl(ServerConfig::url()));
+    }
+    return shared;
+}
+
+void ApiClient::command(const QString &command, const QVariantMap &params, Callback done)
+{
+    QVariantMap all = params;
+    all.insert(QStringLiteral("cmd"), command);
+    // Adresa e chiar scriptul (.../etalonus_test.php), deci calea rămâne goală.
+    get(QString(), all, std::move(done));
 }
 
 QUrl ApiClient::baseUrl() const

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 9+ refuză implicit cererile http (necriptate). Serverul de test
+     (http://una.md:3323, docs/SCOP.md „Serverul de test”) e pe http, deci îl permitem
+     doar pe el; restul rămâne doar https. De scos când serverul trece pe https. -->
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">una.md</domain>
+    </domain-config>
+</network-security-config>

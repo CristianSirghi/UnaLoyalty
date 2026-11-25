@@ -88,7 +88,7 @@ Page {
                         }
                         Text {
                             Layout.fillWidth: true
-                            text: ProfileService.phone
+                            text: Format.phone(ProfileService.phone)
                             color: Theme.textSecondary
                             font.pixelSize: Theme.fontBodySmall
                             elide: Text.ElideRight

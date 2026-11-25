@@ -18,6 +18,11 @@ qt_standard_project_setup(REQUIRES 6.12
 # Modulul QML ajunge în build/qml/: de acolo îl găsesc aplicația,
 # compilatorul QML și editorul din Qt Creator.
 set(QT_QML_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/qml)
+# Editorul din Qt Creator caută modulele doar în căile Qt și în QML_IMPORT_PATH din
+# CMakeCache.txt. Fără linia asta, cu kitul Android, `import UnaLoyalty` apare ca
+# „QML module not found” (doar în editor; build-ul merge oricum).
+set(QML_IMPORT_PATH ${QT_QML_OUTPUT_DIRECTORY}
+    CACHE STRING "Căile QML pentru editorul Qt Creator" FORCE)
 
 qt_add_executable(UnaLoyalty
     src/main.cpp
@@ -70,6 +75,7 @@ qt_add_qml_module(UnaLoyalty
         # Comun
         src/core/apiclient.h
         src/core/apiclient.cpp
+        src/core/serverconfig.h
         src/core/screenbrightness.h
         src/core/screenbrightness.cpp
         src/core/systembars.h
