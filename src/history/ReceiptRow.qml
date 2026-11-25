@@ -57,7 +57,7 @@ AbstractButton {
 
             Text {
                 Layout.fillWidth: true
-                text: qsTr("Bon nr. %1").arg(row.number)
+                text: qsTr("Receipt no. %1").arg(row.number)
                 color: Theme.textPrimary
                 font.pixelSize: Theme.fontBody
                 font.weight: Font.DemiBold
@@ -94,7 +94,7 @@ AbstractButton {
                     anchors.centerIn: parent
                     // Punctele primite; dacă s-a plătit și cu puncte, apar și cele folosite.
                     text: {
-                        let t = qsTr("+%1 puncte").arg(Format.points(row.pointsEarned))
+                        let t = qsTr("+%1 points").arg(Format.points(row.pointsEarned))
                         if (row.pointsSpent > 0)
                             t += "  " + qsTr("−%1").arg(Format.points(row.pointsSpent))
                         return t

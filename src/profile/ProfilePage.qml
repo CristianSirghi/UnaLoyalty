@@ -6,7 +6,7 @@ import UnaLoyalty
 // Deocamdată doar titlul.
 Page {
     id: page
-    title: qsTr("Profil")
+    title: qsTr("Profile")
 
     background: Rectangle { color: Theme.background }
 

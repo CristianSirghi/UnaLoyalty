@@ -75,7 +75,7 @@ ColumnLayout {
     Text {
         Layout.fillWidth: true
         horizontalAlignment: Text.AlignHCenter
-        text: qsTr("Încă nu ai bonuri aici")
+        text: qsTr("No receipts here yet")
         color: Theme.textPrimary
         font.pixelSize: Theme.fontBodyLarge
         font.weight: Font.DemiBold
@@ -84,7 +84,7 @@ ColumnLayout {
     Text {
         Layout.fillWidth: true
         horizontalAlignment: Text.AlignHCenter
-        text: qsTr("Arată codul la casă și punctele apar după primul bon.")
+        text: qsTr("Show the code at the till and points appear after your first receipt.")
         color: Theme.textSecondary
         font.pixelSize: Theme.fontBodySmall
         wrapMode: Text.WordWrap

@@ -17,7 +17,7 @@ Page {
     required property real pointsSpent
     required property string localName
 
-    title: qsTr("Bon nr. %1").arg(number)
+    title: qsTr("Receipt no. %1").arg(number)
 
     background: Rectangle { color: Theme.background }
 
@@ -215,7 +215,7 @@ Page {
                         Layout.fillWidth: true
                         Text {
                             Layout.fillWidth: true
-                            text: qsTr("Puncte primite")
+                            text: qsTr("Points earned")
                             color: Theme.textSecondary
                             font.pixelSize: Theme.fontBody
                         }
@@ -231,7 +231,7 @@ Page {
                         visible: page.pointsSpent > 0
                         Text {
                             Layout.fillWidth: true
-                            text: qsTr("Puncte folosite")
+                            text: qsTr("Points used")
                             color: Theme.textSecondary
                             font.pixelSize: Theme.fontBody
                         }

@@ -12,7 +12,7 @@ AbstractButton {
     implicitWidth: 300
     implicitHeight: 300
 
-    Accessible.name: qsTr("Adaugă un card de la alt local")
+    Accessible.name: qsTr("Add a card from another venue")
 
     background: Shape {
         preferredRendererType: Shape.CurveRenderer
@@ -54,14 +54,14 @@ AbstractButton {
             }
             Text {
                 Layout.alignment: Qt.AlignHCenter
-                text: qsTr("Adaugă un card")
+                text: qsTr("Add a card")
                 color: Theme.textOnPrimary
                 font.pixelSize: Theme.fontBodyLarge
                 font.weight: Font.DemiBold
             }
             Text {
                 Layout.alignment: Qt.AlignHCenter
-                text: qsTr("de la alt local UNA")
+                text: qsTr("from another UNA venue")
                 color: Theme.textOnPrimaryMuted
                 font.pixelSize: Theme.fontCaption
             }

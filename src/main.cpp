@@ -1,5 +1,7 @@
 #include <QGuiApplication>
+#include <QLocale>
 #include <QQmlApplicationEngine>
+#include <QTranslator>
 
 int main(int argc, char *argv[])
 {
@@ -18,10 +20,17 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
+    // Limba: după telefon (ex. ro-MD → unaloyalty_ro.qm, ru → unaloyalty_ru.qm). Pentru
+    // orice altă limbă nu se găsește nimic și rămân textele din cod, în engleză.
+    QTranslator translator;
+    if (translator.load(QLocale(), QStringLiteral("unaloyalty"), QStringLiteral("_"),
+                        QStringLiteral(":/i18n")))
+        app.installTranslator(&translator);
+
     QQmlApplicationEngine engine;
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreationFailed,
                      &app, [] { QCoreApplication::exit(-1); }, Qt::QueuedConnection);
-    // Main.qml din modulul UnaLoyalty (src/CMakeLists.txt); calea o știe Qt.
+    // Main.qml din modulul UnaLoyalty (CMakeLists.txt); calea o știe Qt.
     engine.loadFromModule("UnaLoyalty", "Main");
 
     return app.exec();

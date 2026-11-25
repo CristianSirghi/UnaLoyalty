@@ -5,7 +5,7 @@ import UnaLoyalty
 // Buton rotund doar cu iconiță (înapoi, mărire, închidere), cu zona de apăsare de
 // Theme.touchTarget. `text` nu se vede: e numele citit de cititorul de ecran.
 //   AppIconButton {
-//       text: qsTr("Închide")
+//       text: qsTr("Close")
 //       iconPath: "M 6 6 L 18 18 M 18 6 L 6 18"
 //       iconSize: 20
 //       color: Theme.cardSurfaceMuted          // fondul (implicit transparent)

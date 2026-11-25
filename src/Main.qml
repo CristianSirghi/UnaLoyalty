@@ -70,8 +70,8 @@ Window {
             id: nav
             Layout.fillWidth: true
             tabs: [
-                { label: qsTr("Carduri"), icon: "M 4 5 H 20 A 2 2 0 0 1 22 7 V 17 A 2 2 0 0 1 20 19 H 4 A 2 2 0 0 1 2 17 V 7 A 2 2 0 0 1 4 5 Z M 2 10 H 22" },
-                { label: qsTr("Profil"),  icon: "M 16 8 A 4 4 0 1 1 8 8 A 4 4 0 1 1 16 8 Z M 4 21 C 4 17 8 15 12 15 C 16 15 20 17 20 21" }
+                { label: qsTr("Cards"), icon: "M 4 5 H 20 A 2 2 0 0 1 22 7 V 17 A 2 2 0 0 1 20 19 H 4 A 2 2 0 0 1 2 17 V 7 A 2 2 0 0 1 4 5 Z M 2 10 H 22" },
+                { label: qsTr("Profile"),  icon: "M 16 8 A 4 4 0 1 1 8 8 A 4 4 0 1 1 16 8 Z M 4 21 C 4 17 8 15 12 15 C 16 15 20 17 20 21" }
             ]
         }
     }

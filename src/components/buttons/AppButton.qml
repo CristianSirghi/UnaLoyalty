@@ -3,9 +3,9 @@ import QtQuick.Controls
 import UnaLoyalty
 
 // Butonul aplicației, cu stilul din Theme. Trei variante, aceeași formă:
-//   AppButton { text: qsTr("Intră") }                          // principal (plin)
-//   AppButton { text: qsTr("Anulează"); variant: "secondary" } // contur
-//   AppButton { text: qsTr("Despre"); variant: "text" }        // ca un link
+//   AppButton { text: qsTr("Sign in") }                          // principal (plin)
+//   AppButton { text: qsTr("Cancel"); variant: "secondary" } // contur
+//   AppButton { text: qsTr("About"); variant: "text" }        // ca un link
 //
 // Pornește de la AbstractButton (nu de la Button): desenăm totul noi, deci arată la fel
 // pe Android, iOS și Windows, indiferent de stilul Qt al platformei.

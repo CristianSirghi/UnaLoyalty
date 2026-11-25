@@ -69,7 +69,7 @@ Item {
             }
             AppIconButton {
                 Layout.rightMargin: -Theme.spaceSPlus
-                text: qsTr("Mărește codul")
+                text: qsTr("Enlarge code")
                 iconPath: "M 15 3 H 21 V 9 M 9 21 H 3 V 15 M 21 3 L 14 10 M 3 21 L 10 14"
                 iconSize: 20
                 iconColor: Theme.cardTextSecondary
@@ -83,7 +83,7 @@ Item {
             Layout.alignment: Qt.AlignHCenter
             implicitWidth: 168
             implicitHeight: 168
-            Accessible.name: qsTr("Codul QR al cardului; atinge ca să-l mărești")
+            Accessible.name: qsTr("Card QR code; tap to enlarge")
             onClicked: card.showCodeRequested()
 
             contentItem: AppQrCode {
@@ -102,7 +102,7 @@ Item {
         }
         Text {
             Layout.alignment: Qt.AlignHCenter
-            text: qsTr("Atinge codul ca să-l mărești la casă")
+            text: qsTr("Tap the code to enlarge it at the till")
             color: Theme.cardTextSecondary
             font.pixelSize: Theme.fontSmall
         }

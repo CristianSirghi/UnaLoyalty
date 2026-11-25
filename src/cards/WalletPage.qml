@@ -14,7 +14,7 @@ import UnaLoyalty
 // Datele vin din C++ (CardsService, ReceiptsModel); aici doar se afișează.
 Page {
     id: page
-    title: qsTr("Cardurile mele")
+    title: qsTr("My cards")
 
     background: Rectangle { color: Theme.background }
 
@@ -101,8 +101,8 @@ Page {
                         }
                         Text {
                             text: page.onAddSlide
-                                  ? qsTr("card nou")
-                                  : qsTr("%1 din %2").arg(page.currentIndex + 1).arg(cardRepeater.count)
+                                  ? qsTr("new card")
+                                  : qsTr("%1 of %2").arg(page.currentIndex + 1).arg(cardRepeater.count)
                             color: Theme.textOnPrimaryMuted
                             font.pixelSize: Theme.fontCaption
                             font.weight: Font.Medium
@@ -218,7 +218,7 @@ Page {
                         Layout.fillWidth: true
                         Layout.fillHeight: true
                         Layout.preferredWidth: 1
-                        label: qsTr("Puncte disponibile")
+                        label: qsTr("Available points")
                         value: page.selectedCard ? Format.points(page.selectedCard.points) : ""
                     }
                     WalletStatTile {
@@ -227,11 +227,11 @@ Page {
                         Layout.preferredWidth: 1
                         readonly property bool known: page.selectedCard !== null
                                                       && page.selectedCard.bonusPercent > 0
-                        label: qsTr("Bonus la fiecare bon")
+                        label: qsTr("Bonus on every receipt")
                         value: known ? Format.percent(page.selectedCard.bonusPercent) : "—"
                         valueColor: page.accent
                         note: known && page.selectedCard.maxPayPercent > 0
-                              ? qsTr("Plătești cu puncte până la %1 din bon")
+                              ? qsTr("Pay with points up to %1 of the receipt")
                                     .arg(Format.percent(page.selectedCard.maxPayPercent))
                               : ""
                     }
@@ -250,7 +250,7 @@ Page {
 
                 Text {
                     Layout.fillWidth: true
-                    text: qsTr("Ultimele bonuri")
+                    text: qsTr("Recent receipts")
                     color: Theme.textPrimary
                     font.pixelSize: Theme.fontSubheading
                     font.weight: Font.DemiBold
@@ -261,7 +261,7 @@ Page {
                     leftPadding: Theme.spaceL
                     rightPadding: Theme.spaceL
                     variant: "secondary"
-                    text: qsTr("Toate")
+                    text: qsTr("All")
                     // Istoricul complet al cardului vine mai târziu.
                 }
             }
@@ -313,7 +313,7 @@ Page {
                 Text {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignHCenter
-                    text: qsTr("Ai un card de la alt local?")
+                    text: qsTr("Have a card from another venue?")
                     color: Theme.textPrimary
                     font.pixelSize: Theme.fontBodyLarge
                     font.weight: Font.DemiBold
@@ -322,7 +322,7 @@ Page {
                 Text {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignHCenter
-                    text: qsTr("Îl adaugi aici și le ai pe toate într-un singur loc.")
+                    text: qsTr("Add it here and keep them all in one place.")
                     color: Theme.textSecondary
                     font.pixelSize: Theme.fontBodySmall
                     wrapMode: Text.WordWrap

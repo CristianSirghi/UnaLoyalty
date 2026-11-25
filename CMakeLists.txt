@@ -5,10 +5,15 @@ project(UnaLoyalty VERSION 0.1.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 6.12 REQUIRED COMPONENTS Quick Network)
+find_package(Qt6 6.12 REQUIRED COMPONENTS Quick Network LinguistTools)
 
 # Setările standard Qt 6: moc automat, resursele QML sub :/qt/qml/ etc.
-qt_standard_project_setup(REQUIRES 6.12)
+# Limbile: textele din cod sunt în engleză (qsTr / tr), traduse în română și rusă
+# (vezi „Traduceri” mai jos).
+qt_standard_project_setup(REQUIRES 6.12
+    I18N_SOURCE_LANGUAGE en
+    I18N_TRANSLATED_LANGUAGES ro ru
+)
 
 # Modulul QML ajunge în build/qml/: de acolo îl găsesc aplicația,
 # compilatorul QML și editorul din Qt Creator.
@@ -102,6 +107,17 @@ target_include_directories(UnaLoyalty PRIVATE
 target_sources(UnaLoyalty PRIVATE
     src/3rdparty/qrcodegen/qrcodegen.hpp
     src/3rdparty/qrcodegen/qrcodegen.cpp
+)
+
+# Traduceri: i18n/unaloyalty_ro.ts și _ru.ts (plus _en.ts, doar pentru formele de plural).
+# Text nou în cod → `cmake --build <build> --target update_translations` adaugă textul în
+# fișierele .ts, apoi se completează traducerea (Qt Linguist sau direct în fișier).
+# La build, .ts devin .qm și intră în aplicație sub :/i18n.
+set_property(TARGET UnaLoyalty PROPERTY QT_EXCLUDE_SOURCES_FROM_TRANSLATION "src/3rdparty/*")
+qt_add_translations(UnaLoyalty
+    SOURCE_TARGETS UnaLoyalty
+    TS_FILE_BASE unaloyalty
+    TS_OUTPUT_DIRECTORY i18n
 )
 
 set_target_properties(UnaLoyalty PROPERTIES

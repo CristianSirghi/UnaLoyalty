@@ -7,7 +7,7 @@ import UnaLoyalty
 
 // Bara de jos a aplicației: un buton pe tab, cu iconiță și text.
 //   AppNavBar {
-//       tabs: [ { label: qsTr("Carduri"), icon: "M 2 5 H 22 ..." }, ... ]
+//       tabs: [ { label: qsTr("Cards"), icon: "M 2 5 H 22 ..." }, ... ]
 //   }
 // `icon` e un contur SVG pe o zonă de 24×24, desenat cu AppIcon.
 // Pe telefon, bara se lungește sub bara de navigare a sistemului (SafeArea), ca

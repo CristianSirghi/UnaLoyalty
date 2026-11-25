@@ -79,7 +79,7 @@ Popup {
                     elide: Text.ElideRight
                 }
                 AppIconButton {
-                    text: qsTr("Închide")
+                    text: qsTr("Close")
                     iconPath: "M 6 6 L 18 18 M 18 6 L 6 18"
                     iconSize: 20
                     iconColor: Theme.cardText
@@ -97,7 +97,7 @@ Popup {
                 Layout.preferredWidth: side
                 Layout.preferredHeight: side
                 text: popup.barcode
-                Accessible.name: qsTr("Codul QR al cardului, mărit")
+                Accessible.name: qsTr("Card QR code, enlarged")
             }
 
             Text {
@@ -111,7 +111,7 @@ Popup {
             Text {
                 Layout.fillWidth: true
                 horizontalAlignment: Text.AlignHCenter
-                text: qsTr("Casierul scanează codul sau îl introduce de mână.")
+                text: qsTr("The cashier scans the code or types it in.")
                 color: Theme.cardTextSecondary
                 font.pixelSize: Theme.fontBodySmall
                 wrapMode: Text.WordWrap

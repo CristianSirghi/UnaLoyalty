@@ -4,7 +4,7 @@ import QtQuick.Layouts
 import UnaLoyalty
 
 // O placă mică sub card: o etichetă, o valoare mare și, opțional, o notă.
-//   WalletStatTile { label: qsTr("Puncte disponibile"); value: "100" }
+//   WalletStatTile { label: qsTr("Available points"); value: "100" }
 Item {
     id: tile
 
