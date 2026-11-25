@@ -1,7 +1,7 @@
 #include <QGuiApplication>
-#include <QLocale>
 #include <QQmlApplicationEngine>
-#include <QTranslator>
+
+#include "profile/models/profileservice.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,17 +19,23 @@ int main(int argc, char *argv[])
 #endif
 
     QGuiApplication app(argc, argv);
-
-    // Limba: după telefon (ex. ro-MD → unaloyalty_ro.qm, ru → unaloyalty_ru.qm). Pentru
-    // orice altă limbă nu se găsește nimic și rămân textele din cod, în engleză.
-    QTranslator translator;
-    if (translator.load(QLocale(), QStringLiteral("unaloyalty"), QStringLiteral("_"),
-                        QStringLiteral(":/i18n")))
-        app.installTranslator(&translator);
+    // Pentru QSettings (ex. limba aleasă în Profil). Pe Windows ajung în registru,
+    // sub HKCU\Software\UNA\UnaLoyalty; pe Android, în fișierele aplicației.
+    QCoreApplication::setOrganizationName(QStringLiteral("UNA"));
+    QCoreApplication::setOrganizationDomain(QStringLiteral("una.md"));
+    // Numele și versiunea (pagina „About the app”: Qt.application.name / .version).
+    // Versiunea vine din project(... VERSION ...) în CMakeLists.txt.
+    QCoreApplication::setApplicationName(QStringLiteral("UnaLoyalty"));
+    QCoreApplication::setApplicationVersion(QStringLiteral(APP_VERSION));
 
     QQmlApplicationEngine engine;
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreationFailed,
                      &app, [] { QCoreApplication::exit(-1); }, Qt::QueuedConnection);
+
+    // Limba: o alege ProfileService (cea salvată, altfel a telefonului). Îl cerem
+    // înainte de Main.qml, ca primul ecran să apară direct în limba bună.
+    engine.singletonInstance<ProfileService *>("UnaLoyalty", "ProfileService");
+
     // Main.qml din modulul UnaLoyalty (CMakeLists.txt); calea o știe Qt.
     engine.loadFromModule("UnaLoyalty", "Main");
 

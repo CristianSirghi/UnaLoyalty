@@ -6,17 +6,19 @@ import UnaLoyalty
 //   AppButton { text: qsTr("Sign in") }                          // principal (plin)
 //   AppButton { text: qsTr("Cancel"); variant: "secondary" } // contur
 //   AppButton { text: qsTr("About"); variant: "text" }        // ca un link
+//   AppButton { text: qsTr("Delete"); variant: "danger" }     // ca un link, roșu
 //
 // Pornește de la AbstractButton (nu de la Button): desenăm totul noi, deci arată la fel
 // pe Android, iOS și Windows, indiferent de stilul Qt al platformei.
 AbstractButton {
     id: control
 
-    // "primary" | "secondary" | "text"
+    // "primary" | "secondary" | "text" | "danger"
     property string variant: "primary"
 
     readonly property bool isPrimary: variant === "primary"
     readonly property bool isSecondary: variant === "secondary"
+    readonly property bool isDanger: variant === "danger"
 
     implicitWidth: Math.max(implicitContentWidth + leftPadding + rightPadding,
                             Theme.touchTarget)
@@ -33,7 +35,8 @@ AbstractButton {
     contentItem: Text {
         text: control.text
         font: control.font
-        color: control.isPrimary ? Theme.textOnPrimary : Theme.primary
+        color: control.isPrimary ? Theme.textOnPrimary
+                                 : control.isDanger ? Theme.danger : Theme.primary
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         elide: Text.ElideRight

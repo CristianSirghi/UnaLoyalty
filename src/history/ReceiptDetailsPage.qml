@@ -45,22 +45,10 @@ Page {
             spacing: Theme.spaceL
 
             // Antet: înapoi + numărul bonului
-            RowLayout {
+            AppPageHeader {
                 Layout.fillWidth: true
-                Layout.leftMargin: -Theme.spaceM
-                spacing: Theme.spaceXs
-
-                AppBackButton {
-                    onClicked: page.StackView.view.pop()
-                }
-                Text {
-                    Layout.fillWidth: true
-                    text: page.title
-                    color: Theme.textPrimary
-                    font.pixelSize: Theme.fontHeading
-                    font.weight: Font.Bold
-                    elide: Text.ElideRight
-                }
+                title: page.title
+                onBackClicked: page.StackView.view.pop()
             }
 
             // Localul și data

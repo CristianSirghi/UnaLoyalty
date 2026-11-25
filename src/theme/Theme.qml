@@ -19,6 +19,8 @@ QtObject {
     readonly property color textSecondary: dark ? "#9AA0A8" : "#5F6B7A"
     readonly property color primary:       dark ? "#54A0EB" : "#516894"
     readonly property color primaryPressed: dark ? "#3F8AD6" : "#3E5378"
+    // Fond discret în nuanța primary, cu text primary pe el (cercul cu inițiale din Profil)
+    readonly property color primarySubtle: dark ? "#25324A" : "#E4EAF3"
     // Text pe fundal primary. Fără prefixul "on": QML ia onX drept handler de semnal.
     readonly property color textOnPrimary:      "#FFFFFF"
     readonly property color textOnPrimaryMuted: "#E3E9F4"

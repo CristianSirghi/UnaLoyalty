@@ -2,6 +2,19 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ro" sourcelanguage="en">
 <context>
+    <name>AboutPage</name>
+    <message>
+        <location filename="../src/profile/AboutPage.qml" line="10"/>
+        <source>About the app</source>
+        <translation>Despre aplicație</translation>
+    </message>
+    <message>
+        <location filename="../src/profile/AboutPage.qml" line="60"/>
+        <source>Version %1</source>
+        <translation>Versiunea %1</translation>
+    </message>
+</context>
+<context>
     <name>AddCardSlide</name>
     <message>
         <location filename="../src/cards/AddCardSlide.qml" line="15"/>
@@ -70,12 +83,12 @@
 <context>
     <name>Main</name>
     <message>
-        <location filename="../src/Main.qml" line="73"/>
+        <location filename="../src/Main.qml" line="98"/>
         <source>Cards</source>
         <translation>Carduri</translation>
     </message>
     <message>
-        <location filename="../src/Main.qml" line="74"/>
+        <location filename="../src/Main.qml" line="99"/>
         <source>Profile</source>
         <translation>Profil</translation>
     </message>
@@ -83,9 +96,29 @@
 <context>
     <name>ProfilePage</name>
     <message>
-        <location filename="../src/profile/ProfilePage.qml" line="9"/>
+        <location filename="../src/profile/ProfilePage.qml" line="10"/>
         <source>Profile</source>
         <translation>Profil</translation>
+    </message>
+    <message>
+        <location filename="../src/profile/ProfilePage.qml" line="120"/>
+        <source>Language</source>
+        <translation>Limba</translation>
+    </message>
+    <message>
+        <location filename="../src/profile/ProfilePage.qml" line="156"/>
+        <source>About the app</source>
+        <translation>Despre aplicație</translation>
+    </message>
+    <message>
+        <location filename="../src/profile/ProfilePage.qml" line="164"/>
+        <source>Sign out</source>
+        <translation>Ieși din cont</translation>
+    </message>
+    <message>
+        <location filename="../src/profile/ProfilePage.qml" line="175"/>
+        <source>Delete account</source>
+        <translation>Șterge contul</translation>
     </message>
 </context>
 <context>
@@ -96,17 +129,17 @@
         <translation>Bon nr. %1</translation>
     </message>
     <message>
-        <location filename="../src/history/ReceiptDetailsPage.qml" line="181"/>
+        <location filename="../src/history/ReceiptDetailsPage.qml" line="169"/>
         <source>Total</source>
         <translation>Total</translation>
     </message>
     <message>
-        <location filename="../src/history/ReceiptDetailsPage.qml" line="218"/>
+        <location filename="../src/history/ReceiptDetailsPage.qml" line="206"/>
         <source>Points earned</source>
         <translation>Puncte primite</translation>
     </message>
     <message>
-        <location filename="../src/history/ReceiptDetailsPage.qml" line="234"/>
+        <location filename="../src/history/ReceiptDetailsPage.qml" line="222"/>
         <source>Points used</source>
         <translation>Puncte folosite</translation>
     </message>

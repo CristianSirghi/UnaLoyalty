@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.21)
 
-project(UnaLoyalty VERSION 0.1.0 LANGUAGES CXX)
+project(UnaLoyalty VERSION 1.0.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -43,8 +43,10 @@ qt_add_qml_module(UnaLoyalty
         src/components/buttons/AppButton.qml
         src/components/buttons/AppIconButton.qml
         src/components/buttons/AppBackButton.qml
+        src/components/buttons/AppSegmentedControl.qml
         src/components/navigation/AppNavBar.qml
         src/components/navigation/AppStatusBarScrim.qml
+        src/components/navigation/AppPageHeader.qml
         src/components/containers/AppFlickable.qml
 
         # Carduri
@@ -62,6 +64,8 @@ qt_add_qml_module(UnaLoyalty
 
         # Profil
         src/profile/ProfilePage.qml
+        src/profile/ProfileRow.qml
+        src/profile/AboutPage.qml
     SOURCES
         # Comun
         src/core/apiclient.h
@@ -88,7 +92,14 @@ qt_add_qml_module(UnaLoyalty
         src/history/models/receiptsmodel.cpp
         src/history/models/receiptlinesmodel.h
         src/history/models/receiptlinesmodel.cpp
+
+        # Profil
+        src/profile/models/profileservice.h
+        src/profile/models/profileservice.cpp
 )
+
+# Versiunea din project() de sus ajunge în aplicație (pagina „About the app”).
+target_compile_definitions(UnaLoyalty PRIVATE APP_VERSION="${PROJECT_VERSION}")
 
 # În C++: #include "core/apiclient.h"
 target_include_directories(UnaLoyalty PRIVATE src)
@@ -100,6 +111,7 @@ target_include_directories(UnaLoyalty PRIVATE
     src/components/qrcode
     src/cards/models
     src/history/models
+    src/profile/models
 )
 
 # Biblioteci externe, aduse ca fișiere sursă (vezi docs/SCOP.md, „Biblioteci externe”).

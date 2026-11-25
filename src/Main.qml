@@ -32,12 +32,34 @@ Window {
         value: Theme.dark
     }
 
-    // Butonul „înapoi” al telefonului închide fereastra: întâi ne întoarcem
-    // o pagină în tabul deschis; aplicația se închide doar de pe prima pagină.
+    // Butonul „înapoi” al telefonului închide fereastra. Întâi ne întoarcem o pagină în
+    // tabul deschis; de pe prima pagină a Profilului mergem la Carduri; aplicația se
+    // închide doar de pe portofel.
     onClosing: (close) => {
-        if (nav.currentIndex === 0 && cardsStack.depth > 1) {
+        const stack = nav.currentIndex === 0 ? cardsStack : profileStack
+        if (stack.depth > 1) {
             close.accepted = false
-            cardsStack.pop()
+            stack.pop()
+        } else if (nav.currentIndex !== 0) {
+            close.accepted = false
+            nav.currentIndex = 0
+        }
+    }
+
+    // Prima pagină a fiecărui tab
+    Component { id: walletPage; WalletPage {} }
+    Component { id: profilePage; ProfilePage {} }
+
+    // Altă limbă aleasă în Profil: textele qsTr se schimbă singure (retranslate), dar
+    // numerele și banii (Format.money etc.) nu. De aceea tabul Carduri se construiește
+    // din nou, de la portofel; e ascuns în clipa aceea, deci nu se vede.
+    // Tabul Profil nu: n-are sume, iar pagina rămâne pe loc, ca pastila limbii să
+    // alunece până la capăt. Dacă vor apărea sume pe Profil, se reface și el, dar
+    // după animație.
+    Connections {
+        target: ProfileService
+        function onLanguageChanged() {
+            cardsStack.replace(null, walletPage, {}, StackView.Immediate)
         }
     }
 
@@ -61,9 +83,12 @@ Window {
             // Paginile deschid alte pagini prin page.StackView.view.push(...).
             StackView {
                 id: cardsStack
-                initialItem: WalletPage {}
+                initialItem: walletPage
             }
-            ProfilePage {}
+            StackView {
+                id: profileStack
+                initialItem: profilePage
+            }
         }
 
         AppNavBar {
