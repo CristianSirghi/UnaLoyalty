@@ -6,7 +6,7 @@
 #include "cardsmodel.h"
 
 // Cardurile clientului, pentru QML: CardsService.cards.
-// Deocamdată cu date de exemplu; mai târziu le ia de la server prin ApiClient.
+// Le cere de la server la pornire (comanda get_cards); până vin, lista e goală.
 class CardsService : public QObject
 {
     Q_OBJECT
@@ -21,5 +21,7 @@ public:
     CardsModel *cards() const;
 
 private:
+    void loadCards();
+
     CardsModel *m_cards;
 };
