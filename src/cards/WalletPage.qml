@@ -85,7 +85,7 @@ Page {
                         top: parent.top
                         topMargin: band.topInset + Theme.spaceXxl
                     }
-                    spacing: 14
+                    spacing: Theme.spaceMPlus
 
                     RowLayout {
                         Layout.fillWidth: true
@@ -96,7 +96,7 @@ Page {
                             Layout.fillWidth: true
                             text: page.title
                             color: Theme.textOnPrimary
-                            font.pixelSize: Theme.fontHeading + 2
+                            font.pixelSize: Theme.fontHeadingLarge
                             font.weight: Font.Bold
                         }
                         Text {
@@ -182,7 +182,7 @@ Page {
                     // Punctele de pagină: unde ești în șir
                     Row {
                         Layout.alignment: Qt.AlignHCenter
-                        spacing: 6
+                        spacing: Theme.spaceXsPlus
 
                         Repeater {
                             model: page.slotCount
@@ -192,7 +192,7 @@ Page {
                                 height: 6
                                 radius: 3
                                 color: index === page.currentIndex
-                                       ? Theme.textOnPrimary : Qt.rgba(1, 1, 1, 0.5)
+                                       ? Theme.textOnPrimary : Theme.bandIndicator
                                 Behavior on width { NumberAnimation { duration: 150 } }
                             }
                         }
@@ -244,7 +244,7 @@ Page {
                 Layout.leftMargin: Theme.spaceXl
                 Layout.rightMargin: Theme.spaceXl
                 Layout.topMargin: Theme.spaceXxl
-                Layout.bottomMargin: Theme.spaceS + 2
+                Layout.bottomMargin: Theme.spaceSPlus
                 Layout.preferredHeight: 36
                 visible: page.selectedCard !== null
 
@@ -252,7 +252,7 @@ Page {
                     Layout.fillWidth: true
                     text: qsTr("Ultimele bonuri")
                     color: Theme.textPrimary
-                    font.pixelSize: Theme.fontBody + 3
+                    font.pixelSize: Theme.fontSubheading
                     font.weight: Font.DemiBold
                 }
                 AppButton {
@@ -270,7 +270,7 @@ Page {
                 Layout.fillWidth: true
                 Layout.leftMargin: Theme.spaceXl
                 Layout.rightMargin: Theme.spaceXl
-                spacing: Theme.spaceS + 2
+                spacing: Theme.spaceSPlus
                 visible: page.selectedCard !== null && receipts.count > 0
 
                 Repeater {
@@ -307,7 +307,7 @@ Page {
                 Layout.leftMargin: Theme.spaceXxl + Theme.spaceXs
                 Layout.rightMargin: Theme.spaceXxl + Theme.spaceXs
                 Layout.topMargin: Theme.spaceXl
-                spacing: 6
+                spacing: Theme.spaceXsPlus
                 visible: page.onAddSlide
 
                 Text {
@@ -315,7 +315,7 @@ Page {
                     horizontalAlignment: Text.AlignHCenter
                     text: qsTr("Ai un card de la alt local?")
                     color: Theme.textPrimary
-                    font.pixelSize: Theme.fontBody + 1
+                    font.pixelSize: Theme.fontBodyLarge
                     font.weight: Font.DemiBold
                     wrapMode: Text.WordWrap
                 }
@@ -324,7 +324,7 @@ Page {
                     horizontalAlignment: Text.AlignHCenter
                     text: qsTr("Îl adaugi aici și le ai pe toate într-un singur loc.")
                     color: Theme.textSecondary
-                    font.pixelSize: Theme.fontBody - 1
+                    font.pixelSize: Theme.fontBodySmall
                     wrapMode: Text.WordWrap
                 }
             }

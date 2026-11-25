@@ -18,11 +18,11 @@ AbstractButton {
         preferredRendererType: Shape.CurveRenderer
 
         ShapePath {
-            strokeColor: Qt.rgba(1, 1, 1, 0.65)
+            strokeColor: Theme.bandOutline
             strokeWidth: 2
             strokeStyle: ShapePath.DashLine
             dashPattern: [3, 2]
-            fillColor: Qt.rgba(1, 1, 1, control.down ? 0.22 : 0.12)
+            fillColor: control.down ? Theme.bandOverlayStrong : Theme.bandOverlay
 
             PathRectangle {
                 x: 1
@@ -44,28 +44,19 @@ AbstractButton {
                 implicitWidth: 52
                 implicitHeight: 52
                 radius: 26
-                color: Qt.rgba(1, 1, 1, 0.22)
+                color: Theme.bandOverlayStrong
 
-                Shape {
+                AppIcon {
                     anchors.centerIn: parent
-                    width: 24
-                    height: 24
-                    preferredRendererType: Shape.CurveRenderer
-
-                    ShapePath {
-                        strokeColor: Theme.textOnPrimary
-                        strokeWidth: 2
-                        fillColor: "transparent"
-                        capStyle: ShapePath.RoundCap
-                        PathSvg { path: "M 12 5 V 19 M 5 12 H 19" }
-                    }
+                    path: "M 12 5 V 19 M 5 12 H 19"
+                    color: Theme.textOnPrimary
                 }
             }
             Text {
                 Layout.alignment: Qt.AlignHCenter
                 text: qsTr("Adaugă un card")
                 color: Theme.textOnPrimary
-                font.pixelSize: Theme.fontBody + 1
+                font.pixelSize: Theme.fontBodyLarge
                 font.weight: Font.DemiBold
             }
             Text {

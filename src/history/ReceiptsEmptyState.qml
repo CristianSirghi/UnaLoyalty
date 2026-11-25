@@ -77,7 +77,7 @@ ColumnLayout {
         horizontalAlignment: Text.AlignHCenter
         text: qsTr("Încă nu ai bonuri aici")
         color: Theme.textPrimary
-        font.pixelSize: Theme.fontBody + 1
+        font.pixelSize: Theme.fontBodyLarge
         font.weight: Font.DemiBold
         wrapMode: Text.WordWrap
     }
@@ -86,7 +86,7 @@ ColumnLayout {
         horizontalAlignment: Text.AlignHCenter
         text: qsTr("Arată codul la casă și punctele apar după primul bon.")
         color: Theme.textSecondary
-        font.pixelSize: Theme.fontBody - 1
+        font.pixelSize: Theme.fontBodySmall
         wrapMode: Text.WordWrap
     }
 }

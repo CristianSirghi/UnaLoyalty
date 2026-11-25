@@ -34,7 +34,9 @@ qt_add_qml_module(UnaLoyalty
         src/theme/Theme.qml
 
         # Componente (refolosibile; numele încep cu App)
+        src/components/icons/AppIcon.qml
         src/components/buttons/AppButton.qml
+        src/components/buttons/AppIconButton.qml
         src/components/buttons/AppBackButton.qml
         src/components/navigation/AppNavBar.qml
         src/components/navigation/AppStatusBarScrim.qml

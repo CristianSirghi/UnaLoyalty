@@ -18,7 +18,7 @@ Rectangle {
         anchors.centerIn: parent
         text: Format.initial(badge.localName)
         color: Theme.textOnPrimary
-        font.pixelSize: Theme.fontBody + 1
+        font.pixelSize: Theme.fontBodyLarge
         font.weight: Font.Bold
     }
 }

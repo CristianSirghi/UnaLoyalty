@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Layouts
-import QtQuick.Shapes
 import UnaLoyalty
 
 // Un card din portofel: localul, codul QR (gata de scanat la casă) și codul întreg.
@@ -22,7 +21,7 @@ Item {
     signal showCodeRequested()
 
     implicitWidth: 300
-    implicitHeight: content.implicitHeight + Theme.spaceL + Theme.spaceL + 2
+    implicitHeight: content.implicitHeight + Theme.spaceL + Theme.spaceLPlus
 
     RectangularShadow {
         anchors.fill: surface
@@ -45,16 +44,16 @@ Item {
             left: parent.left
             right: parent.right
             top: parent.top
-            leftMargin: Theme.spaceL + 2
-            rightMargin: Theme.spaceL + 2
+            leftMargin: Theme.spaceLPlus
+            rightMargin: Theme.spaceLPlus
             topMargin: Theme.spaceL
         }
-        spacing: Theme.spaceS + 2
+        spacing: Theme.spaceSPlus
 
         // Localul: inițiala în culoarea lui, numele, butonul de mărire
         RowLayout {
             Layout.fillWidth: true
-            spacing: Theme.spaceS + 2
+            spacing: Theme.spaceSPlus
 
             LocalBadge {
                 localName: card.localName
@@ -64,40 +63,18 @@ Item {
                 Layout.fillWidth: true
                 text: card.localName
                 color: Theme.cardText
-                font.pixelSize: Theme.fontBody + 2
+                font.pixelSize: Theme.fontSubheading
                 font.weight: Font.DemiBold
                 elide: Text.ElideRight
             }
-            AbstractButton {
-                id: expandButton
-                Layout.rightMargin: -Theme.spaceS - 2
-                implicitWidth: Theme.touchTarget
-                implicitHeight: Theme.touchTarget
-                Accessible.name: qsTr("Mărește codul")
+            AppIconButton {
+                Layout.rightMargin: -Theme.spaceSPlus
+                text: qsTr("Mărește codul")
+                iconPath: "M 15 3 H 21 V 9 M 9 21 H 3 V 15 M 21 3 L 14 10 M 3 21 L 10 14"
+                iconSize: 20
+                iconColor: Theme.cardTextSecondary
+                pressedColor: Theme.cardSurfaceMuted
                 onClicked: card.showCodeRequested()
-
-                background: Rectangle {
-                    radius: width / 2
-                    color: expandButton.down ? Theme.cardSurfaceMuted : "transparent"
-                }
-                contentItem: Item {
-                    Shape {
-                        anchors.centerIn: parent
-                        width: 24
-                        height: 24
-                        scale: 20 / 24
-                        preferredRendererType: Shape.CurveRenderer
-
-                        ShapePath {
-                            strokeColor: Theme.cardTextSecondary
-                            strokeWidth: 2
-                            fillColor: "transparent"
-                            capStyle: ShapePath.RoundCap
-                            joinStyle: ShapePath.RoundJoin
-                            PathSvg { path: "M 15 3 H 21 V 9 M 9 21 H 3 V 15 M 21 3 L 14 10 M 3 21 L 10 14" }
-                        }
-                    }
-                }
             }
         }
 

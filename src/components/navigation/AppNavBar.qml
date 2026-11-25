@@ -3,14 +3,13 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import QtQuick.Shapes
 import UnaLoyalty
 
 // Bara de jos a aplicației: un buton pe tab, cu iconiță și text.
 //   AppNavBar {
 //       tabs: [ { label: qsTr("Carduri"), icon: "M 2 5 H 22 ..." }, ... ]
 //   }
-// `icon` e un contur SVG pe o zonă de 24×24, desenat cu linie (ca iconițele din schemă).
+// `icon` e un contur SVG pe o zonă de 24×24, desenat cu AppIcon.
 // Pe telefon, bara se lungește sub bara de navigare a sistemului (SafeArea), ca
 // butoanele să nu stea sub ea.
 Item {
@@ -71,20 +70,10 @@ Item {
                         anchors.centerIn: parent
                         spacing: Theme.spaceXs
 
-                        Shape {
+                        AppIcon {
                             Layout.alignment: Qt.AlignHCenter
-                            implicitWidth: 24
-                            implicitHeight: 24
-                            preferredRendererType: Shape.CurveRenderer
-
-                            ShapePath {
-                                strokeColor: tab.tint
-                                strokeWidth: 2
-                                fillColor: "transparent"
-                                capStyle: ShapePath.RoundCap
-                                joinStyle: ShapePath.RoundJoin
-                                PathSvg { path: tab.modelData.icon }
-                            }
+                            path: tab.modelData.icon
+                            color: tab.tint
                         }
                         Text {
                             Layout.alignment: Qt.AlignHCenter

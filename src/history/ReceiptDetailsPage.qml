@@ -85,7 +85,7 @@ Page {
                         Layout.fillWidth: true
                         text: page.localName
                         color: Theme.textPrimary
-                        font.pixelSize: Theme.fontBody + 3
+                        font.pixelSize: Theme.fontSubheading
                         font.weight: Font.DemiBold
                         elide: Text.ElideRight
                     }
@@ -93,7 +93,7 @@ Page {
                         Layout.fillWidth: true
                         text: Format.dateTime(page.dateTime)
                         color: Theme.textSecondary
-                        font.pixelSize: Theme.fontBody - 1
+                        font.pixelSize: Theme.fontBodySmall
                     }
                 }
             }
@@ -138,7 +138,7 @@ Page {
 
                                 ColumnLayout {
                                     Layout.fillWidth: true
-                                    spacing: 2
+                                    spacing: Theme.spaceXxs
 
                                     Text {
                                         Layout.fillWidth: true
@@ -173,20 +173,20 @@ Page {
 
                     RowLayout {
                         Layout.fillWidth: true
-                        Layout.topMargin: Theme.spaceM + 2
+                        Layout.topMargin: Theme.spaceMPlus
                         Layout.bottomMargin: Theme.spaceS
 
                         Text {
                             Layout.fillWidth: true
                             text: qsTr("Total")
                             color: Theme.textPrimary
-                            font.pixelSize: Theme.fontBody + 1
+                            font.pixelSize: Theme.fontBodyLarge
                             font.weight: Font.Bold
                         }
                         Text {
                             text: Format.money(page.total)
                             color: Theme.textPrimary
-                            font.pixelSize: Theme.fontBody + 3
+                            font.pixelSize: Theme.fontSubheading
                             font.weight: Font.Bold
                         }
                     }
@@ -222,7 +222,7 @@ Page {
                         Text {
                             text: "+" + Format.points(page.pointsEarned)
                             color: Theme.primary
-                            font.pixelSize: Theme.fontHeading - 2
+                            font.pixelSize: Theme.fontHeadingSmall
                             font.weight: Font.Bold
                         }
                     }
@@ -238,7 +238,7 @@ Page {
                         Text {
                             text: "−" + Format.points(page.pointsSpent)
                             color: Theme.textPrimary
-                            font.pixelSize: Theme.fontHeading - 2
+                            font.pixelSize: Theme.fontHeadingSmall
                             font.weight: Font.Bold
                         }
                     }

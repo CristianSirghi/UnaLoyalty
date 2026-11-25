@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import QtQuick.Shapes
 import UnaLoyalty
 
 // Codul cardului mărit pe tot ecranul, pentru casier: QR mare pe alb, codul întreg
@@ -65,7 +64,7 @@ Popup {
             // Localul și butonul de închidere
             RowLayout {
                 Layout.fillWidth: true
-                spacing: Theme.spaceS + 2
+                spacing: Theme.spaceSPlus
 
                 LocalBadge {
                     localName: popup.localName
@@ -75,38 +74,18 @@ Popup {
                     Layout.fillWidth: true
                     text: popup.localName
                     color: Theme.cardText
-                    font.pixelSize: Theme.fontBody + 3
+                    font.pixelSize: Theme.fontSubheading
                     font.weight: Font.DemiBold
                     elide: Text.ElideRight
                 }
-                AbstractButton {
-                    id: closeButton
-                    implicitWidth: Theme.touchTarget
-                    implicitHeight: Theme.touchTarget
-                    Accessible.name: qsTr("Închide")
+                AppIconButton {
+                    text: qsTr("Închide")
+                    iconPath: "M 6 6 L 18 18 M 18 6 L 6 18"
+                    iconSize: 20
+                    iconColor: Theme.cardText
+                    color: Theme.cardSurfaceMuted
+                    pressedColor: Theme.cardSurfacePressed
                     onClicked: popup.close()
-
-                    background: Rectangle {
-                        radius: width / 2
-                        color: closeButton.down ? Theme.cardSurfacePressed : Theme.cardSurfaceMuted
-                    }
-                    contentItem: Item {
-                        Shape {
-                            anchors.centerIn: parent
-                            width: 24
-                            height: 24
-                            scale: 20 / 24
-                            preferredRendererType: Shape.CurveRenderer
-
-                            ShapePath {
-                                strokeColor: Theme.cardText
-                                strokeWidth: 2
-                                fillColor: "transparent"
-                                capStyle: ShapePath.RoundCap
-                                PathSvg { path: "M 6 6 L 18 18 M 18 6 L 6 18" }
-                            }
-                        }
-                    }
                 }
             }
 
@@ -134,7 +113,7 @@ Popup {
                 horizontalAlignment: Text.AlignHCenter
                 text: qsTr("Casierul scanează codul sau îl introduce de mână.")
                 color: Theme.cardTextSecondary
-                font.pixelSize: Theme.fontBody - 1
+                font.pixelSize: Theme.fontBodySmall
                 wrapMode: Text.WordWrap
             }
 

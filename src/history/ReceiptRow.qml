@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import QtQuick.Shapes
 import UnaLoyalty
 
 // Un bon în „Ultimele bonuri”: o placă cu iconița, numărul și data la stânga,
@@ -24,8 +23,8 @@ AbstractButton {
     implicitHeight: content.implicitHeight + topPadding + bottomPadding
     leftPadding: Theme.spaceL
     rightPadding: Theme.spaceL
-    topPadding: 14
-    bottomPadding: 14
+    topPadding: Theme.spaceMPlus
+    bottomPadding: Theme.spaceMPlus
 
     background: Rectangle {
         radius: Theme.radiusM
@@ -43,28 +42,18 @@ AbstractButton {
             radius: 21
             color: Theme.surfaceMuted
 
-            Shape {
+            AppIcon {
                 anchors.centerIn: parent
-                width: 24
-                height: 24
-                scale: 20 / 24
-                preferredRendererType: Shape.CurveRenderer
-
-                ShapePath {
-                    strokeColor: row.accent
-                    strokeWidth: 2
-                    fillColor: "transparent"
-                    capStyle: ShapePath.RoundCap
-                    joinStyle: ShapePath.RoundJoin
-                    PathSvg { path: "M 6 2 H 18 V 22 L 15 20 L 12 22 L 9 20 L 6 22 Z M 9 7 H 15 M 9 11 H 15 M 9 15 H 13" }
-                }
+                size: 20
+                path: "M 6 2 H 18 V 22 L 15 20 L 12 22 L 9 20 L 6 22 Z M 9 7 H 15 M 9 11 H 15 M 9 15 H 13"
+                color: row.accent
             }
         }
 
         // Numărul și data (fillWidth și pe texte: altfel coloana nu se lățește)
         ColumnLayout {
             Layout.fillWidth: true
-            spacing: 2
+            spacing: Theme.spaceXxs
 
             Text {
                 Layout.fillWidth: true
@@ -96,7 +85,7 @@ AbstractButton {
             Rectangle {
                 Layout.alignment: Qt.AlignRight
                 implicitWidth: chip.implicitWidth + Theme.spaceS * 2
-                implicitHeight: chip.implicitHeight + 4
+                implicitHeight: chip.implicitHeight + Theme.spaceXs
                 radius: height / 2
                 color: Qt.rgba(row.accent.r, row.accent.g, row.accent.b, 0.14)
 

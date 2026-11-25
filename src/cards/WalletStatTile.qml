@@ -14,7 +14,7 @@ Item {
     property color valueColor: Theme.textPrimary
 
     implicitWidth: content.implicitWidth + Theme.spaceL * 2
-    implicitHeight: content.implicitHeight + 14 * 2
+    implicitHeight: content.implicitHeight + Theme.spaceMPlus * 2
 
     RectangularShadow {
         anchors.fill: surface
@@ -39,7 +39,7 @@ Item {
             top: parent.top
             leftMargin: Theme.spaceL
             rightMargin: Theme.spaceL
-            topMargin: 14
+            topMargin: Theme.spaceMPlus
         }
         spacing: Theme.spaceXs
 
