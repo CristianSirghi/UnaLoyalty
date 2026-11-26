@@ -9,7 +9,9 @@ import UnaLoyalty
 Page {
     id: page
 
-    required property int receiptId
+    required property string barcode   // codul cardului
+    required property int serverId     // casa bonului
+    required property int receiptId    // bonul pe casa lui
     required property string number
     required property date dateTime
     required property real total
@@ -21,9 +23,11 @@ Page {
 
     background: Rectangle { color: Theme.background }
 
-    // Produsele bonului; modelul C++ le încarcă singur după receiptId.
+    // Produsele bonului; modelul C++ le încarcă singur de pe server (de pe casa bonului).
     ReceiptLinesModel {
         id: lines
+        barcode: page.barcode
+        serverId: page.serverId
         receiptId: page.receiptId
     }
 
@@ -157,6 +161,18 @@ Page {
                                 color: Theme.border
                             }
                         }
+                    }
+
+                    // Produsele stau doar pe casa localului: dacă nu răspunde, o spunem
+                    // (totalul și punctele de mai jos vin din Back, deci rămân corecte).
+                    Text {
+                        Layout.fillWidth: true
+                        Layout.topMargin: Theme.spaceM
+                        visible: lines.failed
+                        text: qsTr("The products of this receipt can't be shown right now.")
+                        color: Theme.textSecondary
+                        font.pixelSize: Theme.fontBodySmall
+                        wrapMode: Text.WordWrap
                     }
 
                     RowLayout {

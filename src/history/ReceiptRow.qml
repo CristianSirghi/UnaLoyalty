@@ -9,6 +9,7 @@ import UnaLoyalty
 AbstractButton {
     id: row
 
+    required property int serverId
     required property int receiptId
     required property string number
     required property date dateTime

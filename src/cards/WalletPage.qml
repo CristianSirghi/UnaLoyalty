@@ -280,6 +280,8 @@ Page {
                         Layout.fillWidth: true
                         accent: page.accent
                         onClicked: page.StackView.view.push(receiptDetails, {
+                            barcode: receipts.barcode,
+                            serverId: receiptRow.serverId,
                             receiptId: receiptRow.receiptId,
                             number: receiptRow.number,
                             dateTime: receiptRow.dateTime,
