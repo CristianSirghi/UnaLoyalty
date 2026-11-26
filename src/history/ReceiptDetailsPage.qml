@@ -181,9 +181,10 @@ Page {
                 }
             }
 
-            // Punctele primite (și cele folosite, dacă s-a plătit cu puncte)
+            // Punctele primite și cele folosite; fiecare rând doar dacă nu e 0
             Rectangle {
                 Layout.fillWidth: true
+                visible: page.pointsEarned > 0 || page.pointsSpent > 0
                 implicitHeight: pointsColumn.implicitHeight + Theme.spaceL * 2
                 radius: Theme.radiusM
                 color: Theme.surface
@@ -201,6 +202,7 @@ Page {
 
                     RowLayout {
                         Layout.fillWidth: true
+                        visible: page.pointsEarned > 0
                         Text {
                             Layout.fillWidth: true
                             text: qsTr("Points earned")

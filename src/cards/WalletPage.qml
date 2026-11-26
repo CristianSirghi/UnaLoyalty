@@ -46,10 +46,10 @@ Page {
         ReceiptDetailsPage {}
     }
 
-    // Bonurile cardului ales; modelul C++ le încarcă singur după cardId.
+    // Bonurile cardului ales; modelul C++ le încarcă singur de pe server, după codul cardului.
     ReceiptsModel {
         id: receipts
-        cardId: page.selectedCard ? page.selectedCard.cardId : 0
+        barcode: page.selectedCard ? page.selectedCard.barcode : ""
     }
 
     AppFlickable {
@@ -297,7 +297,8 @@ Page {
                 Layout.leftMargin: Theme.spaceXxl + Theme.spaceL
                 Layout.rightMargin: Theme.spaceXxl + Theme.spaceL
                 Layout.topMargin: Theme.spaceS
-                visible: page.selectedCard !== null && receipts.count === 0
+                // Nu cât încă se încarcă: altfel ar apărea o clipă „fără bonuri”.
+                visible: page.selectedCard !== null && receipts.count === 0 && !receipts.loading
                 accent: page.accent
             }
 

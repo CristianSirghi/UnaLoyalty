@@ -35,13 +35,13 @@
 <context>
     <name>ApiClient</name>
     <message>
-        <location filename="../src/core/apiclient.cpp" line="57"/>
-        <location filename="../src/core/apiclient.cpp" line="72"/>
+        <location filename="../src/core/apiclient.cpp" line="79"/>
+        <location filename="../src/core/apiclient.cpp" line="94"/>
         <source>Missing server address.</source>
         <translation>Не указан адрес сервера.</translation>
     </message>
     <message>
-        <location filename="../src/core/apiclient.cpp" line="96"/>
+        <location filename="../src/core/apiclient.cpp" line="118"/>
         <source>Invalid response from server.</source>
         <translation>Некорректный ответ сервера.</translation>
     </message>
@@ -134,12 +134,12 @@
         <translation>Итого</translation>
     </message>
     <message>
-        <location filename="../src/history/ReceiptDetailsPage.qml" line="206"/>
+        <location filename="../src/history/ReceiptDetailsPage.qml" line="208"/>
         <source>Points earned</source>
         <translation>Начислено баллов</translation>
     </message>
     <message>
-        <location filename="../src/history/ReceiptDetailsPage.qml" line="222"/>
+        <location filename="../src/history/ReceiptDetailsPage.qml" line="224"/>
         <source>Points used</source>
         <translation>Списано баллов</translation>
     </message>
@@ -147,19 +147,24 @@
 <context>
     <name>ReceiptRow</name>
     <message>
-        <location filename="../src/history/ReceiptRow.qml" line="60"/>
+        <location filename="../src/history/ReceiptRow.qml" line="63"/>
         <source>Receipt no. %1</source>
         <translation>Чек № %1</translation>
     </message>
     <message>
-        <location filename="../src/history/ReceiptRow.qml" line="97"/>
+        <location filename="../src/history/ReceiptRow.qml" line="100"/>
         <source>+%1 points</source>
         <translation>Баллы: +%1</translation>
     </message>
     <message>
-        <location filename="../src/history/ReceiptRow.qml" line="99"/>
+        <location filename="../src/history/ReceiptRow.qml" line="103"/>
         <source>−%1</source>
         <translation>−%1</translation>
+    </message>
+    <message>
+        <location filename="../src/history/ReceiptRow.qml" line="104"/>
+        <source>−%1 points</source>
+        <translation>Баллы: −%1</translation>
     </message>
 </context>
 <context>
@@ -236,12 +241,12 @@
         <translation>Все</translation>
     </message>
     <message>
-        <location filename="../src/cards/WalletPage.qml" line="316"/>
+        <location filename="../src/cards/WalletPage.qml" line="317"/>
         <source>Have a card from another venue?</source>
         <translation>Есть карта другого заведения?</translation>
     </message>
     <message>
-        <location filename="../src/cards/WalletPage.qml" line="325"/>
+        <location filename="../src/cards/WalletPage.qml" line="326"/>
         <source>Add it here and keep them all in one place.</source>
         <translation>Добавьте её сюда — и все карты будут в одном месте.</translation>
     </message>

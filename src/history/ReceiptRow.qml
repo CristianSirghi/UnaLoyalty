@@ -50,58 +50,71 @@ AbstractButton {
             }
         }
 
-        // Numărul și data (fillWidth și pe texte: altfel coloana nu se lățește)
+        // Două rânduri independente: numărul cu suma, apoi data cu punctele. Așa numărul
+        // împarte lățimea doar cu suma, nu și cu eticheta de puncte (care poate fi lată).
+        // (Nu GridLayout: acolo coloana din dreapta ia lățimea celui mai lat element.)
         ColumnLayout {
             Layout.fillWidth: true
             spacing: Theme.spaceXxs
 
-            Text {
+            RowLayout {
                 Layout.fillWidth: true
-                text: qsTr("Receipt no. %1").arg(row.number)
-                color: Theme.textPrimary
-                font.pixelSize: Theme.fontBody
-                font.weight: Font.DemiBold
-                elide: Text.ElideRight
-            }
-            Text {
-                Layout.fillWidth: true
-                text: Format.dateTime(row.dateTime)
-                color: Theme.textSecondary
-                font.pixelSize: Theme.fontCaption
-            }
-        }
-
-        // Suma și punctele
-        ColumnLayout {
-            spacing: Theme.spaceXs
-
-            Text {
-                Layout.alignment: Qt.AlignRight
-                text: Format.money(row.total)
-                color: Theme.textPrimary
-                font.pixelSize: Theme.fontBody
-                font.weight: Font.DemiBold
-            }
-            Rectangle {
-                Layout.alignment: Qt.AlignRight
-                implicitWidth: chip.implicitWidth + Theme.spaceS * 2
-                implicitHeight: chip.implicitHeight + Theme.spaceXs
-                radius: height / 2
-                color: Qt.rgba(row.accent.r, row.accent.g, row.accent.b, 0.14)
+                spacing: Theme.spaceM
 
                 Text {
-                    id: chip
-                    anchors.centerIn: parent
-                    // Punctele primite; dacă s-a plătit și cu puncte, apar și cele folosite.
-                    text: {
-                        let t = qsTr("+%1 points").arg(Format.points(row.pointsEarned))
-                        if (row.pointsSpent > 0)
-                            t += "  " + qsTr("−%1").arg(Format.points(row.pointsSpent))
-                        return t
-                    }
-                    color: row.accent
-                    font.pixelSize: Theme.fontSmall
+                    Layout.fillWidth: true
+                    text: qsTr("Receipt no. %1").arg(row.number)
+                    color: Theme.textPrimary
+                    font.pixelSize: Theme.fontBody
                     font.weight: Font.DemiBold
+                    elide: Text.ElideRight
+                }
+                Text {
+                    text: Format.money(row.total)
+                    color: Theme.textPrimary
+                    font.pixelSize: Theme.fontBody
+                    font.weight: Font.DemiBold
+                }
+            }
+
+            RowLayout {
+                Layout.fillWidth: true
+                spacing: Theme.spaceM
+
+                Text {
+                    Layout.fillWidth: true
+                    text: Format.shortDateTime(row.dateTime)
+                    color: Theme.textSecondary
+                    font.pixelSize: Theme.fontCaption
+                    elide: Text.ElideRight
+                }
+                Rectangle {
+                    Layout.alignment: Qt.AlignRight
+                    implicitWidth: chip.implicitWidth + Theme.spaceS * 2
+                    implicitHeight: chip.implicitHeight + Theme.spaceXs
+                    radius: height / 2
+                    color: Qt.rgba(row.accent.r, row.accent.g, row.accent.b, 0.14)
+                    visible: chip.text !== ""
+
+                    Text {
+                        id: chip
+                        anchors.centerIn: parent
+                        // Punctele primite și cele folosite, fiecare doar dacă nu e 0. „puncte”
+                        // apare o dată: după primele, sau după cele folosite când sunt singure.
+                        text: {
+                            const parts = []
+                            if (row.pointsEarned > 0)
+                                parts.push(qsTr("+%1 points").arg(Format.points(row.pointsEarned)))
+                            if (row.pointsSpent > 0)
+                                parts.push(row.pointsEarned > 0
+                                           ? qsTr("−%1").arg(Format.points(row.pointsSpent))
+                                           : qsTr("−%1 points").arg(Format.points(row.pointsSpent)))
+                            return parts.join("  ")
+                        }
+                        color: row.accent
+                        font.pixelSize: Theme.fontSmall
+                        font.weight: Font.DemiBold
+                    }
                 }
             }
         }

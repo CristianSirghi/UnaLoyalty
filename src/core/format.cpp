@@ -34,6 +34,14 @@ QString Format::dateTime(const QDateTime &value) const
     return value.toString(QStringLiteral("dd.MM.yyyy, HH:mm"));
 }
 
+QString Format::shortDateTime(const QDateTime &value) const
+{
+    // În liste, unde locul e puțin: anul doar dacă nu e anul curent.
+    if (value.date().year() == QDate::currentDate().year())
+        return value.toString(QStringLiteral("dd.MM, HH:mm"));
+    return dateTime(value);
+}
+
 QString Format::phone(const QString &value) const
 {
     // În Back telefonul e scris local („060000002”), uneori poate și cu prefixul

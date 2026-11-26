@@ -6,31 +6,36 @@
 #include <QString>
 #include <QtQml/qqmlregistration.h>
 
-// Un bon pe care s-a folosit cardul.
+// Un bon pe care s-a folosit cardul (get_receipts, docs/SCOP.md).
 struct Receipt
 {
-    int id = 0;               // id-ul bonului (pentru „Detaliul bonului”)
-    QString number;           // numărul bonului, cum apare tipărit
+    int serverId = 0;         // casa bonului (SERVER_ID)
+    int id = 0;               // bonul pe casa lui (CHECK_ID = TMDB_COMENZ.COD); unic doar
+                              // împreună cu serverId
+    QString number;           // numărul afișat al bonului
     QDateTime dateTime;       // când s-a închis bonul
-    double total = 0;         // suma bonului, lei
+    double total = 0;         // suma bonului, lei (bani + puncte folosite)
     double pointsEarned = 0;  // puncte primite (bonus din bon)
     double pointsSpent = 0;   // puncte folosite la plată (0 dacă nu)
 };
 
-// Bonurile unui card, cele mai noi primele. În QML:
-//   ReceiptsModel { cardId: page.cardId }
-// Rândurile au câmpurile receiptId, number, dateTime, total, pointsEarned, pointsSpent.
+// Bonurile unui card, cele mai noi primele, de pe server. În QML:
+//   ReceiptsModel { barcode: page.selectedCard.barcode }
+// Rândurile au câmpurile serverId, receiptId, number, dateTime, total, pointsEarned,
+// pointsSpent. Cât timp așteaptă răspunsul, loading e true.
 class ReceiptsModel : public QAbstractListModel
 {
     Q_OBJECT
     QML_ELEMENT
 
-    Q_PROPERTY(int cardId READ cardId WRITE setCardId NOTIFY cardIdChanged)
+    Q_PROPERTY(QString barcode READ barcode WRITE setBarcode NOTIFY barcodeChanged)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
+    Q_PROPERTY(bool loading READ loading NOTIFY loadingChanged)
 
 public:
     enum Role {
-        ReceiptIdRole = Qt::UserRole + 1,
+        ServerIdRole = Qt::UserRole + 1,
+        ReceiptIdRole,
         NumberRole,
         DateTimeRole,
         TotalRole,
@@ -40,22 +45,27 @@ public:
 
     explicit ReceiptsModel(QObject *parent = nullptr);
 
-    int cardId() const;
-    void setCardId(int cardId);
+    QString barcode() const;
+    void setBarcode(const QString &barcode);
 
     int count() const;
+    bool loading() const;
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role) const override;
     QHash<int, QByteArray> roleNames() const override;
 
 signals:
-    void cardIdChanged();
+    void barcodeChanged();
     void countChanged();
+    void loadingChanged();
 
 private:
     void load();
+    void setReceipts(const QList<Receipt> &receipts);
+    void setLoading(bool loading);
 
-    int m_cardId = 0;
+    QString m_barcode;
     QList<Receipt> m_receipts;
+    bool m_loading = false;
 };
