@@ -54,6 +54,9 @@ qt_add_qml_module(UnaLoyalty
         src/components/navigation/AppPageHeader.qml
         src/components/containers/AppFlickable.qml
         src/components/display/AppValueRow.qml
+        src/components/inputs/AppTextField.qml
+        src/components/inputs/AppCodeField.qml
+        src/components/dialogs/AppDialog.qml
 
         # Carduri
         src/cards/WalletPage.qml
