@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
+#include "auth/models/sessionservice.h"
 #include "profile/models/profileservice.h"
 
 int main(int argc, char *argv[])
@@ -35,6 +36,9 @@ int main(int argc, char *argv[])
     // Limba: o alege ProfileService (cea salvată, altfel a telefonului). Îl cerem
     // înainte de Main.qml, ca primul ecran să apară direct în limba bună.
     engine.singletonInstance<ProfileService *>("UnaLoyalty", "ProfileService");
+    // Sesiunea: citește tokenul salvat și îl dă ApiClient-ului înaintea primelor cereri,
+    // iar Main.qml știe de la început dacă arată portofelul sau prima pagină.
+    engine.singletonInstance<SessionService *>("UnaLoyalty", "SessionService");
 
     // Main.qml din modulul UnaLoyalty (CMakeLists.txt); calea o știe Qt.
     engine.loadFromModule("UnaLoyalty", "Main");

@@ -30,10 +30,11 @@ QByteArray formEncode(const QVariantMap &params)
     return out;
 }
 
-ApiClient::Result failure(const QString &error)
+ApiClient::Result failure(const QString &error, bool network = false)
 {
     ApiClient::Result result;
     result.error = error;
+    result.network = network;
     return result;
 }
 
@@ -63,6 +64,41 @@ void ApiClient::command(const QString &command, const QVariantMap &params, Callb
     get(QString(), all, std::move(done));
 }
 
+void ApiClient::commandPost(const QString &command, const QVariantMap &params, Callback done)
+{
+    if (m_baseUrl.isEmpty()) {
+        done(failure(tr("Missing server address.")));
+        return;
+    }
+
+    // Comanda rămâne în adresă (?cmd=), datele în corp.
+    QUrl url = m_baseUrl;
+    url.setQuery(QString::fromLatin1(formEncode({{QStringLiteral("cmd"), command}})));
+
+    QNetworkRequest request(url);
+    prepare(request);
+    request.setHeader(QNetworkRequest::ContentTypeHeader,
+                      QStringLiteral("application/x-www-form-urlencoded"));
+    handle(m_network->post(request, formEncode(params)), std::move(done));
+}
+
+QString ApiClient::token() const
+{
+    return m_token;
+}
+
+void ApiClient::setToken(const QString &token)
+{
+    m_token = token;
+}
+
+void ApiClient::prepare(QNetworkRequest &request) const
+{
+    request.setTransferTimeout(kTimeoutMs);
+    if (!m_token.isEmpty())
+        request.setRawHeader("X-Loyalty-Token", m_token.toLatin1());
+}
+
 QUrl ApiClient::baseUrl() const
 {
     return m_baseUrl;
@@ -84,7 +120,7 @@ void ApiClient::get(const QString &path, const QVariantMap &params, Callback don
     url.setQuery(QString::fromLatin1(formEncode(params)));
 
     QNetworkRequest request(url);
-    request.setTransferTimeout(kTimeoutMs);
+    prepare(request);
     handle(m_network->get(request), std::move(done));
 }
 
@@ -96,7 +132,7 @@ void ApiClient::post(const QString &path, const QVariantMap &params, Callback do
     }
 
     QNetworkRequest request(m_baseUrl.resolved(QUrl(path)));
-    request.setTransferTimeout(kTimeoutMs);
+    prepare(request);
     request.setHeader(QNetworkRequest::ContentTypeHeader,
                       QStringLiteral("application/x-www-form-urlencoded"));
     handle(m_network->post(request, formEncode(params)), std::move(done));
@@ -104,11 +140,11 @@ void ApiClient::post(const QString &path, const QVariantMap &params, Callback do
 
 void ApiClient::handle(QNetworkReply *reply, Callback done)
 {
-    connect(reply, &QNetworkReply::finished, this, [reply, done = std::move(done)]() {
+    connect(reply, &QNetworkReply::finished, this, [this, reply, done = std::move(done)]() {
         reply->deleteLater();
 
         if (reply->error() != QNetworkReply::NoError) {
-            done(failure(reply->errorString()));
+            done(failure(reply->errorString(), true));
             return;
         }
 
@@ -121,7 +157,11 @@ void ApiClient::handle(QNetworkReply *reply, Callback done)
 
         // Serverul raportează erorile ca {"error": "..."}, nu prin cod HTTP.
         if (doc.isObject() && doc.object().contains(QLatin1String("error"))) {
-            done(failure(doc.object().value(QLatin1String("error")).toString()));
+            Result result = failure(doc.object().value(QLatin1String("error")).toString());
+            result.data = doc.object();
+            if (result.error.startsWith(QLatin1String("token_")))
+                emit sessionRejected();
+            done(result);
             return;
         }
 

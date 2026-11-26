@@ -108,6 +108,10 @@ qt_add_qml_module(UnaLoyalty
         # Profil
         src/profile/models/profileservice.h
         src/profile/models/profileservice.cpp
+
+        # Contul (înregistrare, intrare, sesiune)
+        src/auth/models/sessionservice.h
+        src/auth/models/sessionservice.cpp
 )
 
 # Versiunea din project() de sus ajunge în aplicație (pagina „About the app”).
@@ -124,6 +128,7 @@ target_include_directories(UnaLoyalty PRIVATE
     src/cards/models
     src/history/models
     src/profile/models
+    src/auth/models
 )
 
 # Biblioteci externe, aduse ca fișiere sursă (vezi docs/SCOP.md, „Biblioteci externe”).
