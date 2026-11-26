@@ -77,6 +77,12 @@ qt_add_qml_module(UnaLoyalty
         src/profile/ProfilePage.qml
         src/profile/ProfileRow.qml
         src/profile/AboutPage.qml
+
+        # Contul (înregistrare, intrare)
+        src/auth/WelcomePage.qml
+        src/auth/SignInPage.qml
+        src/auth/RegisterPage.qml
+        src/auth/CodePage.qml
     SOURCES
         # Comun
         src/core/apiclient.h

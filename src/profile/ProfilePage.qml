@@ -4,7 +4,8 @@ import QtQuick.Layouts
 import UnaLoyalty
 
 // Profil: persoana (inițiale, nume, telefon), limba, despre aplicație, ieșirea din cont
-// și ștergerea contului. Datele și limba le ține ProfileService (C++).
+// și ștergerea contului. Datele și limba le ține ProfileService (C++); ieșirea și ștergerea
+// le face SessionService, iar Main.qml duce apoi la prima pagină.
 Page {
     id: page
     title: qsTr("Profile")
@@ -12,6 +13,40 @@ Page {
     background: Rectangle { color: Theme.background }
 
     Component { id: aboutPage; AboutPage {} }
+
+    AppDialog {
+        id: signOutDialog
+        title: qsTr("Sign out?")
+        text: qsTr("You can sign in again anytime with your phone number.")
+        acceptText: qsTr("Sign out")
+        rejectText: qsTr("Cancel")
+        onAccepted: SessionService.signOut()
+    }
+
+    AppDialog {
+        id: deleteDialog
+        title: qsTr("Delete account?")
+        text: qsTr("Your account will be deleted: name, phone number and email. Your cards and points stay with each venue. This can't be undone.")
+        acceptText: qsTr("Delete account")
+        rejectText: qsTr("Cancel")
+        destructive: true
+        onAccepted: SessionService.deleteAccount()
+    }
+
+    // Ștergerea n-a mers (ex. fără internet): omul află de ce.
+    AppDialog {
+        id: errorDialog
+        title: qsTr("The account wasn't deleted")
+    }
+
+    Connections {
+        target: SessionService
+        enabled: page.StackView.status === StackView.Active && SessionService.signedIn
+        function onRequestFailed(code, message) {
+            errorDialog.text = message
+            errorDialog.open()
+        }
+    }
 
     AppFlickable {
         anchors.fill: parent
@@ -158,21 +193,23 @@ Page {
                         first: true
                         onClicked: page.StackView.view.push(aboutPage)
                     }
-                    // Deocamdată nu face nimic: intrarea în cont nu există încă.
                     ProfileRow {
                         Layout.fillWidth: true
                         text: qsTr("Sign out")
                         last: true
+                        onClicked: signOutDialog.open()
                     }
                 }
             }
 
-            // Ștergerea contului: cerută de App Store. Deocamdată nu face nimic.
+            // Ștergerea contului: cerută de App Store.
             AppButton {
                 Layout.alignment: Qt.AlignHCenter
                 Layout.topMargin: Theme.spaceS
                 variant: "danger"
                 text: qsTr("Delete account")
+                busy: SessionService.busy
+                onClicked: deleteDialog.open()
             }
         }
     }

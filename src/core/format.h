@@ -31,4 +31,6 @@ public:
     Q_INVOKABLE QString shortDateTime(const QDateTime &value) const;
     Q_INVOKABLE QString initial(const QString &name) const;
     Q_INVOKABLE QString phone(const QString &value) const;
+    // Secunde rămase, ca pe un ceas: 42 → „0:42”, 75 → „1:15”.
+    Q_INVOKABLE QString duration(int seconds) const;
 };

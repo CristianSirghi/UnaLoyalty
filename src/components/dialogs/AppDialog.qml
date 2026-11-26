@@ -31,6 +31,10 @@ T.Popup {
     parent: T.Overlay.overlay
     anchors.centerIn: parent
     width: parent ? Math.min(parent.width - Theme.spaceXxl * 2, 360) : 320
+    // Șablonul T.Popup nu-și calculează singur înălțimea (o fac doar stilurile Qt): fără
+    // asta, fereastra avea înălțimea 0, fondul alb nu se vedea și textul ieșea sub centru.
+    implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
+                             contentHeight + topPadding + bottomPadding)
     modal: true
     focus: true
     padding: Theme.spaceXxl

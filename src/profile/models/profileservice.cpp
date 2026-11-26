@@ -1,7 +1,6 @@
 #include "profileservice.h"
 
-#include "core/apiclient.h"
-#include "core/serverconfig.h"
+#include "auth/models/sessionservice.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -56,28 +55,24 @@ ProfileService::ProfileService(QQmlEngine *engine, QObject *parent)
     m_language = isSupported(saved) ? saved : systemLanguage();
     applyLanguage();
 
-    loadProfile();
+    // Numele și telefonul vin din contul în care s-a intrat (SessionService); se schimbă
+    // la intrare, la ieșire și când vine get_account la pornire.
+    if (engine) {
+        if (auto *session = engine->singletonInstance<SessionService *>("UnaLoyalty",
+                                                                        "SessionService")) {
+            connect(session, &SessionService::accountChanged, this,
+                    [this, session] { takeAccount(session); });
+            takeAccount(session);
+        }
+    }
 }
 
-void ProfileService::loadProfile()
+void ProfileService::takeAccount(const SessionService *session)
 {
-    ApiClient::instance()->command(
-        QStringLiteral("get_profile"),
-        {{QStringLiteral("card"), ServerConfig::testCard()}},
-        [self = QPointer<ProfileService>(this)](const ApiClient::Result &result) {
-            if (!self)
-                return;
-            if (!result.ok) {
-                qWarning() << "get_profile:" << result.error;
-                return;
-            }
-            // Răspunsul: {"FIRST_NAME": ..., "LAST_NAME": ..., "PHONE": ...}
-            const QJsonObject person = result.data.toObject();
-            self->m_firstName = person.value(QLatin1String("FIRST_NAME")).toString().trimmed();
-            self->m_lastName = person.value(QLatin1String("LAST_NAME")).toString().trimmed();
-            self->m_phone = person.value(QLatin1String("PHONE")).toString().trimmed();
-            emit self->profileChanged();
-        });
+    m_firstName = session->firstName().trimmed();
+    m_lastName = session->lastName().trimmed();
+    m_phone = session->phone();
+    emit profileChanged();
 }
 
 ProfileService *ProfileService::create(QQmlEngine *qmlEngine, QJSEngine *jsEngine)

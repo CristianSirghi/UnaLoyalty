@@ -8,13 +8,12 @@
 
 class QQmlEngine;
 class QJSEngine;
+class SessionService;
 
 // Profilul clientului, pentru QML: ProfileService.name, .phone, .initials, .language.
-// Datele sunt în forma din Back (TMS_PERSONS_PHYS, verificat 25.11.2026): prenumele
-// (FIRST_NAME) și numele (LAST_NAME) separat, telefonul mobil (PHONE_MOB) în format local,
-// „060000002”. Le dă serverul (comanda get_profile), cerute la pornire; până vin, sunt
-// goale. Cât nu există intrarea în cont, se cere titularul cardului de test
-// (ServerConfig::testCard). Telefonul se afișează prin Format.phone: „+373 60 000 002”.
+// Numele și telefonul sunt ale contului în care s-a intrat (SessionService, tabela
+// TLOY_ACCOUNTS): prenumele și numele separat, telefonul „+37360000002”. Fără cont sunt
+// goale. Telefonul se afișează prin Format.phone: „+373 60 000 002”.
 //
 // Tot aici se alege limba aplicației: "ro", "ru" sau "en". La prima pornire e limba
 // telefonului (altă limbă decât ro/ru → engleză); după ce clientul alege una în Profil,
@@ -26,9 +25,9 @@ class ProfileService : public QObject
     QML_ELEMENT
     QML_SINGLETON
 
-    // Numele afișat: prenumele + numele („Test Loialitate 2”).
+    // Numele afișat: prenumele + numele („Ștefan Sîrghi”).
     Q_PROPERTY(QString name READ name NOTIFY profileChanged)
-    // Telefonul mobil așa cum e în baza de date („060000002”); de afișat cu Format.phone.
+    // Telefonul contului („+37360000002”); de afișat cu Format.phone.
     Q_PROPERTY(QString phone READ phone NOTIFY profileChanged)
     // Pentru cercul cu inițiale: prima literă din prenume și din nume → „TL”.
     Q_PROPERTY(QString initials READ initials NOTIFY profileChanged)
@@ -54,8 +53,8 @@ signals:
 
 private:
     void applyLanguage();
-    // Cere de la server prenumele, numele și telefonul (get_profile).
-    void loadProfile();
+    // Numele și telefonul din contul curent.
+    void takeAccount(const SessionService *session);
 
     QPointer<QQmlEngine> m_engine;
     QTranslator m_translator;

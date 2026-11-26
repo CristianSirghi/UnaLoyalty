@@ -65,6 +65,12 @@ QString Format::phone(const QString &value) const
         .arg(digits.left(2), digits.mid(2, 3), digits.mid(5, 3));
 }
 
+QString Format::duration(int seconds) const
+{
+    seconds = qMax(0, seconds);
+    return QStringLiteral("%1:%2").arg(seconds / 60).arg(seconds % 60, 2, 10, QLatin1Char('0'));
+}
+
 QString Format::initial(const QString &name) const
 {
     for (const QChar c : name) {
