@@ -124,50 +124,65 @@
 <context>
     <name>ReceiptDetailsPage</name>
     <message>
-        <location filename="../src/history/ReceiptDetailsPage.qml" line="22"/>
+        <location filename="../src/history/ReceiptDetailsPage.qml" line="23"/>
         <source>Receipt no. %1</source>
         <translation>Чек № %1</translation>
     </message>
     <message>
-        <location filename="../src/history/ReceiptDetailsPage.qml" line="172"/>
+        <location filename="../src/history/ReceiptDetailsPage.qml" line="173"/>
         <source>The products of this receipt can&apos;t be shown right now.</source>
         <translation>Товары этого чека сейчас недоступны.</translation>
     </message>
     <message>
-        <location filename="../src/history/ReceiptDetailsPage.qml" line="185"/>
+        <location filename="../src/history/ReceiptDetailsPage.qml" line="186"/>
         <source>Total</source>
         <translation>Итого</translation>
     </message>
     <message>
-        <location filename="../src/history/ReceiptDetailsPage.qml" line="224"/>
+        <location filename="../src/history/ReceiptDetailsPage.qml" line="229"/>
         <source>Points earned</source>
         <translation>Начислено баллов</translation>
     </message>
     <message>
-        <location filename="../src/history/ReceiptDetailsPage.qml" line="240"/>
+        <location filename="../src/history/ReceiptDetailsPage.qml" line="236"/>
         <source>Points used</source>
         <translation>Списано баллов</translation>
+    </message>
+    <message>
+        <location filename="../src/history/ReceiptDetailsPage.qml" line="243"/>
+        <source>Cash</source>
+        <translation>Наличные</translation>
+    </message>
+    <message>
+        <location filename="../src/history/ReceiptDetailsPage.qml" line="249"/>
+        <source>Bank card</source>
+        <translation>Банковская карта</translation>
+    </message>
+    <message>
+        <location filename="../src/history/ReceiptDetailsPage.qml" line="258"/>
+        <source>Paid</source>
+        <translation>Оплачено</translation>
     </message>
 </context>
 <context>
     <name>ReceiptRow</name>
     <message>
-        <location filename="../src/history/ReceiptRow.qml" line="67"/>
+        <location filename="../src/history/ReceiptRow.qml" line="68"/>
         <source>Receipt no. %1</source>
         <translation>Чек № %1</translation>
     </message>
     <message>
-        <location filename="../src/history/ReceiptRow.qml" line="108"/>
+        <location filename="../src/history/ReceiptRow.qml" line="109"/>
         <source>+%1 points</source>
         <translation>Баллы: +%1</translation>
     </message>
     <message>
-        <location filename="../src/history/ReceiptRow.qml" line="111"/>
+        <location filename="../src/history/ReceiptRow.qml" line="112"/>
         <source>−%1</source>
         <translation>−%1</translation>
     </message>
     <message>
-        <location filename="../src/history/ReceiptRow.qml" line="112"/>
+        <location filename="../src/history/ReceiptRow.qml" line="113"/>
         <source>−%1 points</source>
         <translation>Баллы: −%1</translation>
     </message>
@@ -246,12 +261,12 @@
         <translation>Все</translation>
     </message>
     <message>
-        <location filename="../src/cards/WalletPage.qml" line="319"/>
+        <location filename="../src/cards/WalletPage.qml" line="320"/>
         <source>Have a card from another venue?</source>
         <translation>Есть карта другого заведения?</translation>
     </message>
     <message>
-        <location filename="../src/cards/WalletPage.qml" line="328"/>
+        <location filename="../src/cards/WalletPage.qml" line="329"/>
         <source>Add it here and keep them all in one place.</source>
         <translation>Добавьте её сюда — и все карты будут в одном месте.</translation>
     </message>

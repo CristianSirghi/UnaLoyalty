@@ -15,6 +15,7 @@ Page {
     required property string number
     required property date dateTime
     required property real total
+    required property real paid        // în bani (total - puncte folosite)
     required property real pointsEarned
     required property real pointsSpent
     required property string localName
@@ -197,16 +198,22 @@ Page {
                 }
             }
 
-            // Punctele primite și cele folosite; fiecare rând doar dacă nu e 0
+            // Punctele și plata; fiecare rând doar dacă nu e 0
             Rectangle {
+                id: paymentCard
+
+                // Plata (numerar / card bancar) vine de pe casă, odată cu produsele.
+                readonly property bool paymentKnown: !lines.loading && !lines.failed
+                                                     && (lines.cash > 0 || lines.card > 0)
+
                 Layout.fillWidth: true
-                visible: page.pointsEarned > 0 || page.pointsSpent > 0
-                implicitHeight: pointsColumn.implicitHeight + Theme.spaceL * 2
+                visible: page.pointsEarned > 0 || page.pointsSpent > 0 || paymentKnown
+                implicitHeight: paymentColumn.implicitHeight + Theme.spaceL * 2
                 radius: Theme.radiusM
                 color: Theme.surface
 
                 ColumnLayout {
-                    id: pointsColumn
+                    id: paymentColumn
                     anchors {
                         left: parent.left
                         right: parent.right
@@ -216,37 +223,40 @@ Page {
                     }
                     spacing: Theme.spaceS
 
-                    RowLayout {
+                    AppValueRow {
                         Layout.fillWidth: true
                         visible: page.pointsEarned > 0
-                        Text {
-                            Layout.fillWidth: true
-                            text: qsTr("Points earned")
-                            color: Theme.textSecondary
-                            font.pixelSize: Theme.fontBody
-                        }
-                        Text {
-                            text: "+" + Format.points(page.pointsEarned)
-                            color: Theme.primary
-                            font.pixelSize: Theme.fontHeadingSmall
-                            font.weight: Font.Bold
-                        }
+                        label: qsTr("Points earned")
+                        value: "+" + Format.points(page.pointsEarned)
+                        valueColor: Theme.primary
                     }
-                    RowLayout {
+                    AppValueRow {
                         Layout.fillWidth: true
                         visible: page.pointsSpent > 0
-                        Text {
-                            Layout.fillWidth: true
-                            text: qsTr("Points used")
-                            color: Theme.textSecondary
-                            font.pixelSize: Theme.fontBody
-                        }
-                        Text {
-                            text: "−" + Format.points(page.pointsSpent)
-                            color: Theme.textPrimary
-                            font.pixelSize: Theme.fontHeadingSmall
-                            font.weight: Font.Bold
-                        }
+                        label: qsTr("Points used")
+                        value: "−" + Format.points(page.pointsSpent)
+                    }
+                    // Plata în bani, după tip (de pe casă). La plata mixtă apar amândouă.
+                    AppValueRow {
+                        Layout.fillWidth: true
+                        visible: paymentCard.paymentKnown && lines.cash > 0
+                        label: qsTr("Cash")
+                        value: Format.money(lines.cash)
+                    }
+                    AppValueRow {
+                        Layout.fillWidth: true
+                        visible: paymentCard.paymentKnown && lines.card > 0
+                        label: qsTr("Bank card")
+                        value: Format.money(lines.card)
+                    }
+                    // Cât timp plata de pe casă nu se știe (se încarcă / casa nu răspunde):
+                    // suma în bani din Back, doar dacă s-a plătit și cu puncte (altfel e
+                    // chiar totalul de mai sus).
+                    AppValueRow {
+                        Layout.fillWidth: true
+                        visible: !paymentCard.paymentKnown && page.pointsSpent > 0
+                        label: qsTr("Paid")
+                        value: Format.money(page.paid)
                     }
                 }
             }

@@ -14,6 +14,7 @@ AbstractButton {
     required property string number
     required property date dateTime
     required property real total
+    required property real paid        // nu se afișează aici; merge la pagina bonului
     required property real pointsEarned
     required property real pointsSpent
 

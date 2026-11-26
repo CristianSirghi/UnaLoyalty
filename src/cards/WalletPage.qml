@@ -286,6 +286,7 @@ Page {
                             number: receiptRow.number,
                             dateTime: receiptRow.dateTime,
                             total: receiptRow.total,
+                            paid: receiptRow.paid,
                             pointsEarned: receiptRow.pointsEarned,
                             pointsSpent: receiptRow.pointsSpent,
                             localName: page.selectedCard ? page.selectedCard.localName : ""

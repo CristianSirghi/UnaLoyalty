@@ -9,7 +9,7 @@
 
 namespace {
 
-// O linie din răspunsul get_receipt_lines (docs/SCOP.md, „Serverul de test”).
+// O linie din LINES, în răspunsul get_receipt_lines (docs/SCOP.md, „Serverul de test”).
 ReceiptLine lineFromJson(const QJsonObject &json)
 {
     ReceiptLine line;
@@ -84,6 +84,16 @@ bool ReceiptLinesModel::failed() const
     return m_failed;
 }
 
+double ReceiptLinesModel::cash() const
+{
+    return m_cash;
+}
+
+double ReceiptLinesModel::card() const
+{
+    return m_card;
+}
+
 int ReceiptLinesModel::rowCount(const QModelIndex &parent) const
 {
     return parent.isValid() ? 0 : count();
@@ -129,6 +139,7 @@ void ReceiptLinesModel::load()
     m_loadScheduled = false;
     const int request = ++m_request;
     setLines({});
+    setPayment(0, 0);
     setFailed(false);
     if (m_barcode.isEmpty() || m_serverId == 0 || m_receiptId == 0) {
         setLoading(false);
@@ -151,11 +162,14 @@ void ReceiptLinesModel::load()
                 self->setFailed(true);
                 return;
             }
+            const QJsonObject receipt = result.data.toObject();
             QList<ReceiptLine> lines;
-            const QJsonArray rows = result.data.toArray();
+            const QJsonArray rows = receipt.value(QLatin1String("LINES")).toArray();
             for (const QJsonValue &row : rows)
                 lines.append(lineFromJson(row.toObject()));
             self->setLines(lines);
+            self->setPayment(receipt.value(QLatin1String("CASH")).toDouble(),
+                             receipt.value(QLatin1String("CARD")).toDouble());
         });
 }
 
@@ -183,4 +197,13 @@ void ReceiptLinesModel::setFailed(bool failed)
         return;
     m_failed = failed;
     emit failedChanged();
+}
+
+void ReceiptLinesModel::setPayment(double cash, double card)
+{
+    if (m_cash == cash && m_card == card)
+        return;
+    m_cash = cash;
+    m_card = card;
+    emit paymentChanged();
 }

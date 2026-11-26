@@ -20,6 +20,7 @@ Receipt receiptFromJson(const QJsonObject &json)
     receipt.dateTime = QDateTime::fromString(json.value(QLatin1String("CLOSED_AT")).toString(),
                                              Qt::ISODate);
     receipt.total = json.value(QLatin1String("TOTAL")).toDouble();
+    receipt.paid = json.value(QLatin1String("PAID")).toDouble();
     receipt.pointsEarned = json.value(QLatin1String("POINTS_EARNED")).toDouble();
     receipt.pointsSpent = json.value(QLatin1String("POINTS_SPENT")).toDouble();
     return receipt;
@@ -73,6 +74,7 @@ QVariant ReceiptsModel::data(const QModelIndex &index, int role) const
     case NumberRole:       return receipt.number;
     case DateTimeRole:     return receipt.dateTime;
     case TotalRole:        return receipt.total;
+    case PaidRole:         return receipt.paid;
     case PointsEarnedRole: return receipt.pointsEarned;
     case PointsSpentRole:  return receipt.pointsSpent;
     }
@@ -87,6 +89,7 @@ QHash<int, QByteArray> ReceiptsModel::roleNames() const
         { NumberRole,       "number" },
         { DateTimeRole,     "dateTime" },
         { TotalRole,        "total" },
+        { PaidRole,         "paid" },
         { PointsEarnedRole, "pointsEarned" },
         { PointsSpentRole,  "pointsSpent" },
     };

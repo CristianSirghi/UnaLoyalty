@@ -17,8 +17,9 @@ struct ReceiptLine
 // Liniile unui bon, în ordinea de pe bon, de pe server (get_receipt_lines, docs/SCOP.md).
 // Bonul se știe după card, casă și numărul lui pe casă:
 //   ReceiptLinesModel { barcode: page.barcode; serverId: page.serverId; receiptId: page.receiptId }
-// Rândurile au câmpurile name, quantity, price, sum. Cât timp așteaptă răspunsul, loading e
-// true; dacă produsele n-au putut fi aduse (ex. casa nu răspunde), failed e true.
+// Rândurile au câmpurile name, quantity, price, sum. Odată cu produsele vine și plata bonului
+// în bani: cash (numerar) și card (card bancar), în lei; amândouă 0 până vin. Cât timp așteaptă
+// răspunsul, loading e true; dacă n-au putut fi aduse (ex. casa nu răspunde), failed e true.
 class ReceiptLinesModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -30,6 +31,8 @@ class ReceiptLinesModel : public QAbstractListModel
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(bool loading READ loading NOTIFY loadingChanged)
     Q_PROPERTY(bool failed READ failed NOTIFY failedChanged)
+    Q_PROPERTY(double cash READ cash NOTIFY paymentChanged)
+    Q_PROPERTY(double card READ card NOTIFY paymentChanged)
 
 public:
     enum Role {
@@ -51,6 +54,8 @@ public:
     int count() const;
     bool loading() const;
     bool failed() const;
+    double cash() const;
+    double card() const;
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role) const override;
@@ -63,6 +68,7 @@ signals:
     void countChanged();
     void loadingChanged();
     void failedChanged();
+    void paymentChanged();
 
 private:
     void scheduleLoad();
@@ -70,6 +76,7 @@ private:
     void setLines(const QList<ReceiptLine> &lines);
     void setLoading(bool loading);
     void setFailed(bool failed);
+    void setPayment(double cash, double card);
 
     QString m_barcode;
     int m_serverId = 0;
@@ -77,6 +84,8 @@ private:
     QList<ReceiptLine> m_lines;
     bool m_loading = false;
     bool m_failed = false;
+    double m_cash = 0;
+    double m_card = 0;
     bool m_loadScheduled = false;
     int m_request = 0;   // crește la fiecare cerere: răspunsurile vechi se ignoră
 };
