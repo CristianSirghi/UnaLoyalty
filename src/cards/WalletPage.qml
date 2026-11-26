@@ -40,16 +40,18 @@ Page {
         id: codePopup
     }
 
-    // Pagina unui bon; câmpurile i se dau la deschidere (push).
+    // Istoricul complet al cardului ales („Toate”); câmpurile i se dau la deschidere (push).
     Component {
-        id: receiptDetails
-        ReceiptDetailsPage {}
+        id: receiptsHistory
+        ReceiptsHistoryPage {}
     }
 
-    // Bonurile cardului ales; modelul C++ le încarcă singur de pe server, după codul cardului.
+    // Ultimele bonuri ale cardului ales; modelul C++ le încarcă singur de pe server, după
+    // codul cardului. (id-ul nu e „receipts”: ReceiptList are o proprietate cu numele ăsta.)
     ReceiptsModel {
-        id: receipts
+        id: recentReceipts
         barcode: page.selectedCard ? page.selectedCard.barcode : ""
+        limit: 3
     }
 
     AppFlickable {
@@ -256,43 +258,29 @@ Page {
                     font.weight: Font.DemiBold
                 }
                 AppButton {
-                    visible: receipts.count > 0
+                    visible: recentReceipts.count > 0
                     implicitHeight: 36
                     leftPadding: Theme.spaceL
                     rightPadding: Theme.spaceL
                     variant: "secondary"
                     text: qsTr("All")
-                    // Istoricul complet al cardului vine mai târziu.
+                    onClicked: page.StackView.view.push(receiptsHistory, {
+                        barcode: page.selectedCard.barcode,
+                        localName: page.selectedCard.localName,
+                        accent: page.accent
+                    })
                 }
             }
 
-            ColumnLayout {
+            ReceiptList {
                 Layout.fillWidth: true
                 Layout.leftMargin: Theme.spaceXl
                 Layout.rightMargin: Theme.spaceXl
-                spacing: Theme.spaceSPlus
-                visible: page.selectedCard !== null && receipts.count > 0
-
-                Repeater {
-                    model: receipts
-                    delegate: ReceiptRow {
-                        id: receiptRow
-                        Layout.fillWidth: true
-                        accent: page.accent
-                        onClicked: page.StackView.view.push(receiptDetails, {
-                            barcode: receipts.barcode,
-                            serverId: receiptRow.serverId,
-                            receiptId: receiptRow.receiptId,
-                            number: receiptRow.number,
-                            dateTime: receiptRow.dateTime,
-                            total: receiptRow.total,
-                            paid: receiptRow.paid,
-                            pointsEarned: receiptRow.pointsEarned,
-                            pointsSpent: receiptRow.pointsSpent,
-                            localName: page.selectedCard ? page.selectedCard.localName : ""
-                        })
-                    }
-                }
+                visible: page.selectedCard !== null && recentReceipts.count > 0
+                receipts: recentReceipts
+                localName: page.selectedCard ? page.selectedCard.localName : ""
+                accent: page.accent
+                stackView: page.StackView.view
             }
 
             ReceiptsEmptyState {
@@ -301,7 +289,8 @@ Page {
                 Layout.rightMargin: Theme.spaceXxl + Theme.spaceL
                 Layout.topMargin: Theme.spaceS
                 // Nu cât încă se încarcă: altfel ar apărea o clipă „fără bonuri”.
-                visible: page.selectedCard !== null && receipts.count === 0 && !receipts.loading
+                visible: page.selectedCard !== null && recentReceipts.count === 0
+                         && !recentReceipts.loading
                 accent: page.accent
             }
 

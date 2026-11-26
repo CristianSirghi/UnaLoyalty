@@ -201,6 +201,14 @@
     </message>
 </context>
 <context>
+    <name>ReceiptsHistoryPage</name>
+    <message>
+        <location filename="../src/history/ReceiptsHistoryPage.qml" line="17"/>
+        <source>All receipts</source>
+        <translation>Toate bonurile</translation>
+    </message>
+</context>
+<context>
     <name>WalletCard</name>
     <message>
         <location filename="../src/cards/WalletCard.qml" line="72"/>
@@ -226,47 +234,47 @@
         <translation>Cardurile mele</translation>
     </message>
     <message>
-        <location filename="../src/cards/WalletPage.qml" line="104"/>
+        <location filename="../src/cards/WalletPage.qml" line="106"/>
         <source>new card</source>
         <translation>card nou</translation>
     </message>
     <message>
-        <location filename="../src/cards/WalletPage.qml" line="105"/>
+        <location filename="../src/cards/WalletPage.qml" line="107"/>
         <source>%1 of %2</source>
         <translation>%1 din %2</translation>
     </message>
     <message>
-        <location filename="../src/cards/WalletPage.qml" line="221"/>
+        <location filename="../src/cards/WalletPage.qml" line="223"/>
         <source>Available points</source>
         <translation>Puncte disponibile</translation>
     </message>
     <message>
-        <location filename="../src/cards/WalletPage.qml" line="230"/>
+        <location filename="../src/cards/WalletPage.qml" line="232"/>
         <source>Bonus on every receipt</source>
         <translation>Bonus la fiecare bon</translation>
     </message>
     <message>
-        <location filename="../src/cards/WalletPage.qml" line="234"/>
+        <location filename="../src/cards/WalletPage.qml" line="236"/>
         <source>Pay with points up to %1 of the receipt</source>
         <translation>Plătești cu puncte până la %1 din bon</translation>
     </message>
     <message>
-        <location filename="../src/cards/WalletPage.qml" line="253"/>
+        <location filename="../src/cards/WalletPage.qml" line="255"/>
         <source>Recent receipts</source>
         <translation>Ultimele bonuri</translation>
     </message>
     <message>
-        <location filename="../src/cards/WalletPage.qml" line="264"/>
+        <location filename="../src/cards/WalletPage.qml" line="266"/>
         <source>All</source>
         <translation>Toate</translation>
     </message>
     <message>
-        <location filename="../src/cards/WalletPage.qml" line="320"/>
+        <location filename="../src/cards/WalletPage.qml" line="309"/>
         <source>Have a card from another venue?</source>
         <translation>Ai un card de la alt local?</translation>
     </message>
     <message>
-        <location filename="../src/cards/WalletPage.qml" line="329"/>
+        <location filename="../src/cards/WalletPage.qml" line="318"/>
         <source>Add it here and keep them all in one place.</source>
         <translation>Îl adaugi aici și le ai pe toate într-un singur loc.</translation>
     </message>

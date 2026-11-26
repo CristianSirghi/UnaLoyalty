@@ -47,9 +47,29 @@ void ReceiptsModel::setBarcode(const QString &barcode)
     load();
 }
 
+int ReceiptsModel::limit() const
+{
+    return m_limit;
+}
+
+void ReceiptsModel::setLimit(int limit)
+{
+    if (m_limit == limit)
+        return;
+    const int before = count();
+    beginResetModel();
+    m_limit = limit;
+    endResetModel();
+    emit limitChanged();
+    if (count() != before)
+        emit countChanged();
+}
+
 int ReceiptsModel::count() const
 {
-    return int(m_receipts.size());
+    // Serverul le dă pe toate; modelul arată doar primele `limit` (cele mai noi).
+    const int all = int(m_receipts.size());
+    return m_limit > 0 ? qMin(all, m_limit) : all;
 }
 
 bool ReceiptsModel::loading() const

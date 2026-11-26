@@ -21,7 +21,8 @@ struct Receipt
 };
 
 // Bonurile unui card, cele mai noi primele, de pe server. În QML:
-//   ReceiptsModel { barcode: page.selectedCard.barcode }
+//   ReceiptsModel { barcode: page.selectedCard.barcode; limit: 3 }
+// limit: câte bonuri arată modelul (0 = toate); count e numărul arătat.
 // Rândurile au câmpurile serverId, receiptId, number, dateTime, total, paid, pointsEarned,
 // pointsSpent. Cât timp așteaptă răspunsul, loading e true.
 class ReceiptsModel : public QAbstractListModel
@@ -30,6 +31,7 @@ class ReceiptsModel : public QAbstractListModel
     QML_ELEMENT
 
     Q_PROPERTY(QString barcode READ barcode WRITE setBarcode NOTIFY barcodeChanged)
+    Q_PROPERTY(int limit READ limit WRITE setLimit NOTIFY limitChanged)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(bool loading READ loading NOTIFY loadingChanged)
 
@@ -49,6 +51,8 @@ public:
 
     QString barcode() const;
     void setBarcode(const QString &barcode);
+    int limit() const;
+    void setLimit(int limit);
 
     int count() const;
     bool loading() const;
@@ -59,6 +63,7 @@ public:
 
 signals:
     void barcodeChanged();
+    void limitChanged();
     void countChanged();
     void loadingChanged();
 
@@ -68,6 +73,7 @@ private:
     void setLoading(bool loading);
 
     QString m_barcode;
+    int m_limit = 0;
     QList<Receipt> m_receipts;
     bool m_loading = false;
 };

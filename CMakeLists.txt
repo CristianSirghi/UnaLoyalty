@@ -67,6 +67,8 @@ qt_add_qml_module(UnaLoyalty
         src/history/ReceiptRow.qml
         src/history/ReceiptsEmptyState.qml
         src/history/ReceiptDetailsPage.qml
+        src/history/ReceiptList.qml
+        src/history/ReceiptsHistoryPage.qml
 
         # Profil
         src/profile/ProfilePage.qml
