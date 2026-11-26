@@ -1,12 +1,13 @@
 #include "cardsservice.h"
 
+#include "auth/models/sessionservice.h"
 #include "core/apiclient.h"
-#include "core/serverconfig.h"
 
 #include <QDebug>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QPointer>
+#include <QQmlEngine>
 
 namespace {
 
@@ -31,11 +32,31 @@ Card cardFromJson(const QJsonObject &json)
 
 } // namespace
 
-CardsService::CardsService(QObject *parent)
+CardsService::CardsService(QQmlEngine *engine, QObject *parent)
     : QObject(parent)
     , m_cards(new CardsModel(this))
 {
-    loadCards();
+    auto *session = engine ? engine->singletonInstance<SessionService *>("UnaLoyalty",
+                                                                        "SessionService")
+                           : nullptr;
+    if (!session)
+        return;
+
+    // Alt cont, alte carduri: la intrare se cer din nou, la ieșire dispar.
+    connect(session, &SessionService::signedInChanged, this, [this, session] {
+        if (session->signedIn())
+            loadCards();
+        else
+            m_cards->setCards({});
+    });
+    if (session->signedIn())
+        loadCards();
+}
+
+CardsService *CardsService::create(QQmlEngine *qmlEngine, QJSEngine *jsEngine)
+{
+    Q_UNUSED(jsEngine)
+    return new CardsService(qmlEngine);
 }
 
 CardsModel *CardsService::cards() const
@@ -45,10 +66,9 @@ CardsModel *CardsService::cards() const
 
 void CardsService::loadCards()
 {
-    // Cât nu există intrarea în cont: cardurile titularului cardului de test.
+    // Cardurile persoanelor legate de cont; contul îl află serverul din token.
     ApiClient::instance()->command(
-        QStringLiteral("get_cards"),
-        {{QStringLiteral("card"), ServerConfig::testCard()}},
+        QStringLiteral("get_cards"), {},
         [self = QPointer<CardsService>(this)](const ApiClient::Result &result) {
             if (!self)
                 return;

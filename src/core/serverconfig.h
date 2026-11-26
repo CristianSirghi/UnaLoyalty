@@ -17,11 +17,4 @@ inline QString url()
     return QStringLiteral("http://una.md:3323/um/una_loyalty/etalonus_test.php");
 }
 
-// Cardul al cărui titular apare în Profil, cât nu există intrarea în cont (SMS):
-// cardul de test Etalonus „Test Loialitate 2”. Dispare odată cu intrarea în cont.
-inline QString testCard()
-{
-    return QStringLiteral("2803990000023");
-}
-
 } // namespace ServerConfig
