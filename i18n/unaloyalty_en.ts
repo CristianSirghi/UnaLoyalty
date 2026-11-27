@@ -4,7 +4,7 @@
 <context>
     <name>SessionService</name>
     <message numerus="yes">
-        <location filename="../src/auth/models/sessionservice.cpp" line="277"/>
+        <location filename="../src/auth/models/sessionservice.cpp" line="369"/>
         <source>Wait %n second(s) before asking for a new code.</source>
         <translation>
             <numerusform>Wait %n second before asking for a new code.</numerusform>
@@ -12,7 +12,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/auth/models/sessionservice.cpp" line="279"/>
+        <location filename="../src/auth/models/sessionservice.cpp" line="371"/>
         <source>Too many codes. Try again in %n minute(s).</source>
         <translation>
             <numerusform>Too many codes. Try again in %n minute.</numerusform>

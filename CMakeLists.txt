@@ -54,6 +54,7 @@ qt_add_qml_module(UnaLoyalty
         src/components/navigation/AppPageHeader.qml
         src/components/containers/AppFlickable.qml
         src/components/display/AppValueRow.qml
+        src/components/display/AppBusyIndicator.qml
         src/components/inputs/AppTextField.qml
         src/components/inputs/AppCodeField.qml
         src/components/dialogs/AppDialog.qml
@@ -77,6 +78,7 @@ qt_add_qml_module(UnaLoyalty
         src/profile/ProfilePage.qml
         src/profile/ProfileRow.qml
         src/profile/AboutPage.qml
+        src/profile/PersonalDetailsPage.qml
 
         # Contul (înregistrare, intrare)
         src/auth/WelcomePage.qml

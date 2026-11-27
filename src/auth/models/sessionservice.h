@@ -12,10 +12,14 @@
 //   înregistrare: startRegistration(prenume, nume, telefon) → cod prin SMS → confirmCode(cod)
 //   intrare:      startSignIn("sms", telefon) sau startSignIn("email", email) → confirmCode(cod)
 //   ieșire:       signOut();   ștergerea contului: deleteAccount()
+//   numele:       updateName(prenume, nume) → nameUpdated
+//   emailul:      startAddEmail(email) → cod pe email → confirmCode(cod) → emailAdded
 //
 // Paginile ascultă semnalele: codeSent (deschide pagina codului), signedInChanged
-// (aplicația trece la portofel / la prima pagină), requestFailed (eroarea, cu codul
-// serverului, ca pagina să aleagă ce face, ex. dialogul la „phone_registered”).
+// (aplicația trece la portofel / la prima pagină), nameUpdated (pagina numelui se închide),
+// emailAdded (pagina codului se întoarce la datele personale),
+// requestFailed (eroarea, cu codul serverului, ca pagina să aleagă ce face, ex. dialogul
+// la „phone_registered”).
 //
 // Tokenul se ține în QSettings (zona privată a aplicației) și pleacă la fiecare cerere prin
 // ApiClient. De mutat în Keystore / Keychain înainte de publicare (docs/SCOP.md).
@@ -63,10 +67,19 @@ public:
                                        const QString &phone, bool force = false);
     // Intrare: channel "sms" (target = telefonul) sau "email".
     Q_INVOKABLE void startSignIn(const QString &channel, const QString &target);
+    // Emailul contului (din Profil): cod pe email, confirmat tot cu confirmCode. După asta se
+    // poate intra în cont și cu emailul.
+    Q_INVOKABLE void startAddEmail(const QString &email);
+    // Verificarea adresei înainte de trimitere (aceeași regulă ca pe server: ceva@ceva.ceva):
+    // "" dacă e bună, altfel textul erorii, deja tradus. Un câmp gol e „bun” (nimic de verificat).
+    Q_INVOKABLE QString checkEmail(const QString &email) const;
     // Același cod încă o dată (după resendAfter).
     Q_INVOKABLE void resendCode();
-    // Codul primit: termină înregistrarea sau intrarea.
+    // Codul primit: termină înregistrarea, intrarea sau adăugarea emailului.
     Q_INVOKABLE void confirmCode(const QString &code);
+
+    // Numele nou al contului (din Profil). Doar în cont: cardurile din Back rămân pe numele vechi.
+    Q_INVOKABLE void updateName(const QString &firstName, const QString &lastName);
 
     Q_INVOKABLE void signOut();
     Q_INVOKABLE void deleteAccount();
@@ -76,12 +89,14 @@ signals:
     void busyChanged();
     void accountChanged();
     void codeSent();
+    void nameUpdated();
+    void emailAdded();
     // code: codul serverului ("code_invalid", "phone_registered"...) sau "network";
     // message: textul pentru om, deja tradus.
     void requestFailed(const QString &code, const QString &message);
 
 private:
-    enum class Purpose { Register, SignIn };
+    enum class Purpose { Register, SignIn, AddEmail };
 
     void requestCode();
     void finishSession(const QJsonValue &data);

@@ -57,21 +57,12 @@ AbstractButton {
             elide: Text.ElideRight
         }
 
-        // Rotița: trei sferturi de cerc care se învârt.
-        AppIcon {
+        AppBusyIndicator {
             anchors.centerIn: parent
             visible: control.busy
+            running: control.busy && control.visible
             size: 20
-            path: "M 12 3 A 9 9 0 1 1 3 12"
             color: control.foreground
-
-            RotationAnimator on rotation {
-                running: control.busy && control.visible
-                from: 0
-                to: 360
-                duration: 900
-                loops: Animation.Infinite
-            }
         }
     }
 

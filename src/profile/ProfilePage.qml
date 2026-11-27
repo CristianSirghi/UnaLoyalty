@@ -3,9 +3,10 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import UnaLoyalty
 
-// Profil: persoana (inițiale, nume, telefon), limba, despre aplicație, ieșirea din cont
-// și ștergerea contului. Datele și limba le ține ProfileService (C++); ieșirea și ștergerea
-// le face SessionService, iar Main.qml duce apoi la prima pagină.
+// Profil: persoana (inițiale, nume, telefon; atinsă deschide datele personale), limba,
+// despre aplicație, ieșirea din cont și ștergerea contului. Datele și limba le ține
+// ProfileService (C++); ieșirea și ștergerea le face SessionService, iar Main.qml duce apoi
+// la prima pagină.
 Page {
     id: page
     title: qsTr("Profile")
@@ -13,6 +14,7 @@ Page {
     background: Rectangle { color: Theme.background }
 
     Component { id: aboutPage; AboutPage {} }
+    Component { id: personalDetailsPage; PersonalDetailsPage {} }
 
     AppDialog {
         id: signOutDialog
@@ -76,12 +78,17 @@ Page {
                 elide: Text.ElideRight
             }
 
-            // ---- Persoana: cercul cu inițiale, numele, telefonul ----
-            Rectangle {
+            // ---- Persoana: cercul cu inițiale, numele, telefonul; atinsă → datele personale ----
+            AbstractButton {
+                id: personCard
                 Layout.fillWidth: true
                 implicitHeight: personRow.implicitHeight + Theme.spaceXl * 2
-                radius: Theme.radiusM
-                color: Theme.surface
+                onClicked: page.StackView.view.push(personalDetailsPage)
+
+                background: Rectangle {
+                    radius: Theme.radiusM
+                    color: personCard.down ? Theme.surfaceMuted : Theme.surface
+                }
 
                 RowLayout {
                     id: personRow
@@ -128,6 +135,13 @@ Page {
                             font.pixelSize: Theme.fontBodySmall
                             elide: Text.ElideRight
                         }
+                    }
+
+                    // Săgeata ›, ca la rândurile apăsabile (ProfileRow)
+                    AppIcon {
+                        size: 20
+                        color: Theme.textSecondary
+                        path: "M 9 18 L 15 12 L 9 6"
                     }
                 }
             }

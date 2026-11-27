@@ -84,32 +84,32 @@
 <context>
     <name>CodePage</name>
     <message>
-        <location filename="../src/auth/CodePage.qml" line="11"/>
+        <location filename="../src/auth/CodePage.qml" line="12"/>
         <source>Enter the code</source>
         <translation>Introdu codul</translation>
     </message>
     <message>
-        <location filename="../src/auth/CodePage.qml" line="70"/>
+        <location filename="../src/auth/CodePage.qml" line="81"/>
         <source>We sent a 6-digit code to %1.</source>
         <translation>Am trimis un cod din 6 cifre la %1.</translation>
     </message>
     <message>
-        <location filename="../src/auth/CodePage.qml" line="71"/>
+        <location filename="../src/auth/CodePage.qml" line="82"/>
         <source>We sent a 6-digit code by SMS to %1.</source>
         <translation>Am trimis prin SMS un cod din 6 cifre la %1.</translation>
     </message>
     <message>
-        <location filename="../src/auth/CodePage.qml" line="101"/>
+        <location filename="../src/auth/CodePage.qml" line="114"/>
         <source>Test server: the code is %1</source>
         <translation>Server de test: codul este %1</translation>
     </message>
     <message>
-        <location filename="../src/auth/CodePage.qml" line="112"/>
+        <location filename="../src/auth/CodePage.qml" line="125"/>
         <source>Resend code in %1</source>
         <translation>Retrimite codul peste %1</translation>
     </message>
     <message>
-        <location filename="../src/auth/CodePage.qml" line="113"/>
+        <location filename="../src/auth/CodePage.qml" line="126"/>
         <source>Resend code</source>
         <translation>Retrimite codul</translation>
     </message>
@@ -125,73 +125,121 @@
 <context>
     <name>Main</name>
     <message>
-        <location filename="../src/Main.qml" line="130"/>
+        <location filename="../src/Main.qml" line="134"/>
         <source>Cards</source>
         <translation>Carduri</translation>
     </message>
     <message>
-        <location filename="../src/Main.qml" line="131"/>
+        <location filename="../src/Main.qml" line="135"/>
         <source>Profile</source>
         <translation>Profil</translation>
     </message>
 </context>
 <context>
+    <name>PersonalDetailsPage</name>
+    <message>
+        <location filename="../src/profile/PersonalDetailsPage.qml" line="15"/>
+        <source>Personal details</source>
+        <translation>Date personale</translation>
+    </message>
+    <message>
+        <location filename="../src/profile/PersonalDetailsPage.qml" line="114"/>
+        <source>First name</source>
+        <translation>Prenume</translation>
+    </message>
+    <message>
+        <location filename="../src/profile/PersonalDetailsPage.qml" line="125"/>
+        <source>Last name</source>
+        <translation>Nume</translation>
+    </message>
+    <message>
+        <location filename="../src/profile/PersonalDetailsPage.qml" line="138"/>
+        <source>We&apos;ll send a code to confirm it.</source>
+        <translation>Îți trimitem un cod ca să-l confirmi.</translation>
+    </message>
+    <message>
+        <location filename="../src/profile/PersonalDetailsPage.qml" line="154"/>
+        <source>Phone number</source>
+        <translation>Număr de telefon</translation>
+    </message>
+    <message>
+        <location filename="../src/profile/PersonalDetailsPage.qml" line="156"/>
+        <source>You sign in with this number.</source>
+        <translation>Cu acest număr intri în cont.</translation>
+    </message>
+    <message>
+        <location filename="../src/profile/PersonalDetailsPage.qml" line="135"/>
+        <source>Email</source>
+        <translation>Email</translation>
+    </message>
+    <message>
+        <location filename="../src/profile/PersonalDetailsPage.qml" line="137"/>
+        <source>You can also sign in with this email.</source>
+        <translation>Poți intra în cont și cu acest email.</translation>
+    </message>
+    <message>
+        <location filename="../src/profile/PersonalDetailsPage.qml" line="171"/>
+        <source>Save</source>
+        <translation>Salvează</translation>
+    </message>
+</context>
+<context>
     <name>ProfilePage</name>
     <message>
-        <location filename="../src/profile/ProfilePage.qml" line="11"/>
+        <location filename="../src/profile/ProfilePage.qml" line="12"/>
         <source>Profile</source>
         <translation>Profil</translation>
     </message>
     <message>
-        <location filename="../src/profile/ProfilePage.qml" line="19"/>
+        <location filename="../src/profile/ProfilePage.qml" line="21"/>
         <source>Sign out?</source>
         <translation>Ieși din cont?</translation>
     </message>
     <message>
-        <location filename="../src/profile/ProfilePage.qml" line="20"/>
+        <location filename="../src/profile/ProfilePage.qml" line="22"/>
         <source>You can sign in again anytime with your phone number.</source>
         <translation>Poți intra din nou oricând cu numărul de telefon.</translation>
     </message>
     <message>
-        <location filename="../src/profile/ProfilePage.qml" line="22"/>
-        <location filename="../src/profile/ProfilePage.qml" line="31"/>
+        <location filename="../src/profile/ProfilePage.qml" line="24"/>
+        <location filename="../src/profile/ProfilePage.qml" line="33"/>
         <source>Cancel</source>
         <translation>Anulează</translation>
     </message>
     <message>
-        <location filename="../src/profile/ProfilePage.qml" line="28"/>
+        <location filename="../src/profile/ProfilePage.qml" line="30"/>
         <source>Delete account?</source>
         <translation>Ștergi contul?</translation>
     </message>
     <message>
-        <location filename="../src/profile/ProfilePage.qml" line="29"/>
+        <location filename="../src/profile/ProfilePage.qml" line="31"/>
         <source>Your account will be deleted: name, phone number and email. Your cards and points stay with each venue. This can&apos;t be undone.</source>
         <translation>Contul va fi șters: numele, numărul de telefon și emailul. Cardurile și punctele rămân la fiecare local. Nu se poate anula.</translation>
     </message>
     <message>
-        <location filename="../src/profile/ProfilePage.qml" line="39"/>
+        <location filename="../src/profile/ProfilePage.qml" line="41"/>
         <source>The account wasn&apos;t deleted</source>
         <translation>Contul nu a fost șters</translation>
     </message>
     <message>
-        <location filename="../src/profile/ProfilePage.qml" line="155"/>
+        <location filename="../src/profile/ProfilePage.qml" line="169"/>
         <source>Language</source>
         <translation>Limba</translation>
     </message>
     <message>
-        <location filename="../src/profile/ProfilePage.qml" line="191"/>
+        <location filename="../src/profile/ProfilePage.qml" line="205"/>
         <source>About the app</source>
         <translation>Despre aplicație</translation>
     </message>
     <message>
-        <location filename="../src/profile/ProfilePage.qml" line="21"/>
-        <location filename="../src/profile/ProfilePage.qml" line="198"/>
+        <location filename="../src/profile/ProfilePage.qml" line="23"/>
+        <location filename="../src/profile/ProfilePage.qml" line="212"/>
         <source>Sign out</source>
         <translation>Ieși din cont</translation>
     </message>
     <message>
-        <location filename="../src/profile/ProfilePage.qml" line="30"/>
-        <location filename="../src/profile/ProfilePage.qml" line="210"/>
+        <location filename="../src/profile/ProfilePage.qml" line="32"/>
+        <location filename="../src/profile/ProfilePage.qml" line="224"/>
         <source>Delete account</source>
         <translation>Șterge contul</translation>
     </message>
@@ -339,47 +387,47 @@
 <context>
     <name>SessionService</name>
     <message>
-        <location filename="../src/auth/models/sessionservice.cpp" line="262"/>
+        <location filename="../src/auth/models/sessionservice.cpp" line="354"/>
         <source>No connection to the server. Check the internet and try again.</source>
         <translation>Nu există legătură cu serverul. Verifică internetul și încearcă din nou.</translation>
     </message>
     <message>
-        <location filename="../src/auth/models/sessionservice.cpp" line="264"/>
+        <location filename="../src/auth/models/sessionservice.cpp" line="356"/>
         <source>Check the phone number.</source>
         <translation>Verifică numărul de telefon.</translation>
     </message>
     <message>
-        <location filename="../src/auth/models/sessionservice.cpp" line="266"/>
-        <source>Check the email address.</source>
-        <translation>Verifică adresa de email.</translation>
+        <location filename="../src/auth/models/sessionservice.cpp" line="358"/>
+        <source>The email address is wrong. Enter a different address.</source>
+        <translation>Adresa introdusă este greșită. Introduceți o altă adresă.</translation>
     </message>
     <message>
-        <location filename="../src/auth/models/sessionservice.cpp" line="268"/>
+        <location filename="../src/auth/models/sessionservice.cpp" line="360"/>
         <source>Enter your first and last name.</source>
         <translation>Scrie prenumele și numele.</translation>
     </message>
     <message>
-        <location filename="../src/auth/models/sessionservice.cpp" line="270"/>
+        <location filename="../src/auth/models/sessionservice.cpp" line="362"/>
         <source>There is no account with this email.</source>
         <translation>Nu există cont cu acest email.</translation>
     </message>
     <message>
-        <location filename="../src/auth/models/sessionservice.cpp" line="271"/>
+        <location filename="../src/auth/models/sessionservice.cpp" line="363"/>
         <source>There is no account with this phone number.</source>
         <translation>Nu există cont cu acest număr de telefon.</translation>
     </message>
     <message>
-        <location filename="../src/auth/models/sessionservice.cpp" line="273"/>
+        <location filename="../src/auth/models/sessionservice.cpp" line="365"/>
         <source>This phone number already has an account.</source>
         <translation>Acest număr de telefon are deja un cont.</translation>
     </message>
     <message>
-        <location filename="../src/auth/models/sessionservice.cpp" line="275"/>
+        <location filename="../src/auth/models/sessionservice.cpp" line="367"/>
         <source>This email belongs to another account.</source>
         <translation>Acest email e la alt cont.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/auth/models/sessionservice.cpp" line="277"/>
+        <location filename="../src/auth/models/sessionservice.cpp" line="369"/>
         <source>Wait %n second(s) before asking for a new code.</source>
         <translation>
             <numerusform>Așteaptă %n secundă până ceri un cod nou.</numerusform>
@@ -388,7 +436,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/auth/models/sessionservice.cpp" line="279"/>
+        <location filename="../src/auth/models/sessionservice.cpp" line="371"/>
         <source>Too many codes. Try again in %n minute(s).</source>
         <translation>
             <numerusform>Prea multe coduri. Încearcă din nou peste %n minut.</numerusform>
@@ -397,32 +445,32 @@
         </translation>
     </message>
     <message>
-        <location filename="../src/auth/models/sessionservice.cpp" line="281"/>
+        <location filename="../src/auth/models/sessionservice.cpp" line="373"/>
         <source>Wrong code. Check it and try again.</source>
         <translation>Cod greșit. Verifică-l și încearcă din nou.</translation>
     </message>
     <message>
-        <location filename="../src/auth/models/sessionservice.cpp" line="283"/>
+        <location filename="../src/auth/models/sessionservice.cpp" line="375"/>
         <source>The code has expired. Ask for a new one.</source>
         <translation>Codul a expirat. Cere unul nou.</translation>
     </message>
     <message>
-        <location filename="../src/auth/models/sessionservice.cpp" line="285"/>
+        <location filename="../src/auth/models/sessionservice.cpp" line="377"/>
         <source>Too many wrong attempts. Ask for a new code.</source>
         <translation>Prea multe încercări greșite. Cere un cod nou.</translation>
     </message>
     <message>
-        <location filename="../src/auth/models/sessionservice.cpp" line="287"/>
+        <location filename="../src/auth/models/sessionservice.cpp" line="379"/>
         <source>Your session has ended. Sign in again.</source>
         <translation>Sesiunea s-a încheiat. Intră din nou în cont.</translation>
     </message>
     <message>
-        <location filename="../src/auth/models/sessionservice.cpp" line="289"/>
+        <location filename="../src/auth/models/sessionservice.cpp" line="381"/>
         <source>Sending codes isn&apos;t available yet.</source>
         <translation>Trimiterea codurilor nu e încă disponibilă.</translation>
     </message>
     <message>
-        <location filename="../src/auth/models/sessionservice.cpp" line="290"/>
+        <location filename="../src/auth/models/sessionservice.cpp" line="382"/>
         <source>Something went wrong on the server. Try again later.</source>
         <translation>Ceva n-a mers pe server. Încearcă mai târziu.</translation>
     </message>

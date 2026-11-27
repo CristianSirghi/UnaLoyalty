@@ -11,6 +11,7 @@ import UnaLoyalty
 //       inputMethodHints: Qt.ImhDialableCharactersOnly
 //       errorText: "..."                                // roșu; ascunde helperText
 //   }
+//   AppTextField { label: qsTr("Phone"); text: "..."; readOnly: true }  // doar de citit
 // Pornește de la T.TextField (șablonul fără stil): îl desenăm noi, deci arată la fel pe
 // toate platformele. Ce înseamnă textul (validare, trimitere) decide pagina.
 ColumnLayout {
@@ -25,6 +26,8 @@ ColumnLayout {
     property alias inputMethodHints: field.inputMethodHints
     property alias maximumLength: field.maximumLength
     property alias validator: field.validator
+    // Doar de citit: fond estompat, fără cursor și fără tastatură.
+    property alias readOnly: field.readOnly
     // Ce apare pe tasta Enter a tastaturii: Qt.EnterKeyNext, Qt.EnterKeyDone...
     property int enterKeyType: Qt.EnterKeyDefault
 
@@ -51,7 +54,7 @@ ColumnLayout {
         Layout.fillWidth: true
         implicitHeight: Theme.touchTarget + Theme.spaceXs
         radius: Theme.radiusS
-        color: Theme.surface
+        color: control.readOnly ? Theme.surfaceMuted : Theme.surface
         border.width: field.activeFocus || control.hasError ? 2 : 1
         border.color: control.hasError ? Theme.danger
                       : field.activeFocus ? Theme.primary : Theme.border
@@ -78,6 +81,7 @@ ColumnLayout {
                 selectionColor: Theme.primarySubtle
                 selectedTextColor: Theme.textPrimary
                 font.pixelSize: Theme.fontBody
+                activeFocusOnPress: !control.readOnly
                 EnterKey.type: control.enterKeyType
                 onAccepted: control.accepted()
 
@@ -95,6 +99,7 @@ ColumnLayout {
 
         // Atingerea oriunde în căsuță (și pe prefix) pune cursorul în câmp.
         TapHandler {
+            enabled: !control.readOnly
             onTapped: field.forceActiveFocus()
         }
     }

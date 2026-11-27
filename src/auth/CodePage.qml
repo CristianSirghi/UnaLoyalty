@@ -4,11 +4,15 @@ import QtQuick.Layouts
 import UnaLoyalty
 
 // Codul primit prin SMS (sau pe email): 6 căsuțe; se trimite singur la ultima cifră.
-// Aceeași pagină pentru înregistrare și intrare: SessionService știe ce a cerut.
-// „Resend code” se poate apăsa după câte secunde spune serverul (RESEND_AFTER).
+// Aceeași pagină pentru înregistrare, intrare și adăugarea emailului (din Profil):
+// SessionService știe ce a cerut. „Resend code” se poate apăsa după câte secunde spune
+// serverul (RESEND_AFTER).
 Page {
     id: page
     title: qsTr("Enter the code")
+
+    // Doar la adăugarea emailului: pagina la care se întoarce după cod (Profilul).
+    property Item returnTo
 
     property string errorText
     property int secondsLeft: SessionService.resendAfter
@@ -39,6 +43,13 @@ Page {
             page.errorText = message
             codeField.clear()
             codeField.focusField()
+        }
+        // Emailul a fost confirmat: înapoi la returnTo (Profilul), peste datele personale.
+        function onEmailAdded() {
+            if (page.returnTo)
+                page.StackView.view.popToItem(page.returnTo)
+            else
+                page.StackView.view.pop()
         }
     }
 

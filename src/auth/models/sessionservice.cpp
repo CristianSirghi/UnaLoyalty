@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QJsonObject>
 #include <QPointer>
+#include <QRegularExpression>
 #include <QSettings>
 #include <QSysInfo>
 
@@ -12,6 +13,15 @@ namespace {
 
 // Cheia din QSettings unde stă tokenul sesiunii.
 const auto kTokenKey = QStringLiteral("session/token");
+
+// Adresa de email arată a adresă: ceva@ceva.ceva, fără spații, cel mult 254 de caractere.
+// Ca pe server (PG_LOYALTY.valid_email): serverul rămâne cel care decide, aici doar nu
+// trimitem ce e evident greșit.
+bool looksLikeEmail(const QString &email)
+{
+    static const QRegularExpression pattern(QStringLiteral("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$"));
+    return email.size() <= 254 && pattern.match(email).hasMatch();
+}
 
 // Ce telefon a intrat (pentru lista sesiunilor de pe server): „Android 14”, „Windows 11”.
 QString deviceName()
@@ -71,7 +81,34 @@ void SessionService::startSignIn(const QString &channel, const QString &target)
     m_channel = channel == u"email" ? QStringLiteral("email") : QStringLiteral("sms");
     m_target = target.trimmed();
     m_force = false;
+    if (m_channel == u"email" && !looksLikeEmail(m_target)) {
+        fail(QStringLiteral("email_invalid"), {}, false);
+        return;
+    }
     requestCode();
+}
+
+void SessionService::startAddEmail(const QString &email)
+{
+    if (m_token.isEmpty())
+        return;
+    m_purpose = Purpose::AddEmail;
+    m_channel = QStringLiteral("email");
+    m_target = email.trimmed();
+    m_force = false;
+    if (!looksLikeEmail(m_target)) {
+        fail(QStringLiteral("email_invalid"), {}, false);
+        return;
+    }
+    requestCode();
+}
+
+QString SessionService::checkEmail(const QString &email) const
+{
+    const QString value = email.trimmed();
+    if (value.isEmpty() || looksLikeEmail(value))
+        return {};
+    return messageFor(QStringLiteral("email_invalid"), {});
 }
 
 void SessionService::resendCode()
@@ -85,11 +122,16 @@ void SessionService::requestCode()
         return;
     setBusy(true);
 
+    QString purpose = QStringLiteral("login");
+    if (m_purpose == Purpose::Register)
+        purpose = QStringLiteral("register");
+    else if (m_purpose == Purpose::AddEmail)
+        purpose = QStringLiteral("email");   // serverul ia contul din token
+
     QVariantMap params{
         {QStringLiteral("channel"), m_channel},
         {QStringLiteral("target"), m_target},
-        {QStringLiteral("purpose"), m_purpose == Purpose::Register ? QStringLiteral("register")
-                                                                   : QStringLiteral("login")},
+        {QStringLiteral("purpose"), purpose},
     };
     if (m_force)
         params.insert(QStringLiteral("force"), QStringLiteral("1"));
@@ -123,8 +165,29 @@ void SessionService::confirmCode(const QString &code)
     QVariantMap params{
         {QStringLiteral("request_id"), m_requestId},
         {QStringLiteral("code"), code.trimmed()},
-        {QStringLiteral("device"), deviceName()},
     };
+
+    // Adăugarea emailului: contul rămâne același; răspunsul e contul, cu emailul nou.
+    if (m_purpose == Purpose::AddEmail) {
+        ApiClient::instance()->commandPost(
+            QStringLiteral("add_email"), params,
+            [self = QPointer<SessionService>(this)](const ApiClient::Result &result) {
+                if (!self)
+                    return;
+                self->setBusy(false);
+                if (!result.ok) {
+                    self->fail(result.error, result.data, result.network);
+                    return;
+                }
+                self->m_requestId.clear();
+                self->m_testCode.clear();
+                self->setAccount(result.data.toObject());
+                emit self->emailAdded();
+            });
+        return;
+    }
+
+    params.insert(QStringLiteral("device"), deviceName());
     QString command = QStringLiteral("login");
     if (m_purpose == Purpose::Register) {
         command = QStringLiteral("register");
@@ -195,6 +258,35 @@ void SessionService::setAccount(const QJsonObject &account)
     emit accountChanged();
 }
 
+void SessionService::updateName(const QString &firstName, const QString &lastName)
+{
+    if (m_busy || m_token.isEmpty())
+        return;
+    const QString first = firstName.trimmed();
+    const QString last = lastName.trimmed();
+    if (first.isEmpty() || last.isEmpty()) {
+        fail(QStringLiteral("name_invalid"), {}, false);
+        return;
+    }
+
+    setBusy(true);
+    ApiClient::instance()->commandPost(
+        QStringLiteral("update_name"),
+        {{QStringLiteral("first_name"), first}, {QStringLiteral("last_name"), last}},
+        [self = QPointer<SessionService>(this)](const ApiClient::Result &result) {
+            if (!self)
+                return;
+            self->setBusy(false);
+            if (!result.ok) {
+                self->fail(result.error, result.data, result.network);
+                return;
+            }
+            // Răspunsul e contul, ca la get_account.
+            self->setAccount(result.data.toObject());
+            emit self->nameUpdated();
+        });
+}
+
 void SessionService::signOut()
 {
     if (m_token.isEmpty())
@@ -263,7 +355,7 @@ QString SessionService::messageFor(const QString &code, const QJsonValue &data) 
     if (code == u"phone_invalid")
         return tr("Check the phone number.");
     if (code == u"email_invalid")
-        return tr("Check the email address.");
+        return tr("The email address is wrong. Enter a different address.");
     if (code == u"name_invalid")
         return tr("Enter your first and last name.");
     if (code == u"account_not_found")
