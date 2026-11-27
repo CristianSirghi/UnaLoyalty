@@ -70,6 +70,9 @@ public:
     // Emailul contului (din Profil): cod pe email, confirmat tot cu confirmCode. După asta se
     // poate intra în cont și cu emailul.
     Q_INVOKABLE void startAddEmail(const QString &email);
+    // Ștergerea emailului (din Profil) → emailRemoved. Serverul refuză (email_required) dacă
+    // contul n-are telefon. Schimbarea emailului = startAddEmail cu adresa nouă.
+    Q_INVOKABLE void removeEmail();
     // Verificarea adresei înainte de trimitere (aceeași regulă ca pe server: ceva@ceva.ceva):
     // "" dacă e bună, altfel textul erorii, deja tradus. Un câmp gol e „bun” (nimic de verificat).
     Q_INVOKABLE QString checkEmail(const QString &email) const;
